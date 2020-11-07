@@ -4,3 +4,19 @@
 .inter {
   font-family: "Inter", sans-serif;
 }
+
+.left-content {
+  
+}
+
+@media (max-width: 1200px) {
+  .left-content {
+    padding: 0 40px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .left-content {
+    padding: 40px 20px;
+  }
+}
