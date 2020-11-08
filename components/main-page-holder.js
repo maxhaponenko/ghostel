@@ -30,7 +30,7 @@ const MainPageHolder = () => {
         </svg>
 
         <img
-          src="/background3.jpg"
+          src="/images/background3.jpg"
           alt="Ocean Image"
           className="lg:absolute object-cover lg:inset-y-0 lg:right-0 lg:h-full lg:w-full"
         />
