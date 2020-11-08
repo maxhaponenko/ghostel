@@ -7,6 +7,7 @@ export default function DefaultSlider({ children }) {
 
     const settings = {
         dots: true,
+        dotsClass: 'main-slider__dots',
         infinite: true,
         speed: 500,
         slidesToShow: 1,
