@@ -9,8 +9,11 @@ export default function Home() {
         <section className="lp-section__first">
           <h2>Slide 1</h2>
         </section>
-        <section className="lp-section__first">
+        <section className="lp-section__second">
           <h2>Slide 2</h2>
+        </section>
+        <section className="lp-section__third">
+          <h2>Slide 3</h2>
         </section>
         </Slider>
         

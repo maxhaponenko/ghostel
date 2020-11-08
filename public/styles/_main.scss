@@ -7,4 +7,20 @@
         background-position: center;
         background-size: cover;
     }
+    &__second {
+        height: 100vh;
+        width: 100%;
+        background-image: url('/images/background4.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+    &__third {
+        height: 100vh;
+        width: 100%;
+        background-image: url('/images/background3.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
 }
