@@ -6,6 +6,9 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
+        @media (max-width: 499px) {
+            height: calc(100vh - 50px);
+        }
     }
     &__second {
         height: 100vh;
@@ -14,6 +17,9 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
+        @media (max-width: 499px) {
+            height: calc(100vh - 50px);
+        }
     }
     &__third {
         height: 100vh;
@@ -22,5 +28,8 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
+        @media (max-width: 499px) {
+            height: calc(100vh - 50px);
+        }
     }
 }

@@ -1,4 +1,9 @@
 html, body {
     margin: 0;
     font-family: Montserrat, Noto Sans JP, Roboto;
+    box-sizing: border-box;
+}
+
+div, nav {
+    box-sizing: border-box;
 }

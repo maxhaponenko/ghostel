@@ -1,7 +1,17 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import './header.scss';
 
 export default class Header extends React.PureComponent {
+
+    state = {
+        showMenu: false,
+    }
+
+    toggleMenu = () => {
+        this.setState({ showMenu: !this.state.showMenu})
+    }
 
 
     render() {
@@ -9,7 +19,7 @@ export default class Header extends React.PureComponent {
 
         return (
             <nav className="main-nav">
-                <ul className="menu">
+                <ul className={`menu ${this.state.showMenu ? 'show' : ''}`}>
                     
                     <li className="menu__item">Home</li>
                     <li className="menu__item">Our story</li>
@@ -19,6 +29,9 @@ export default class Header extends React.PureComponent {
                     <li className="menu__item">Bookings</li>
                     <li className="menu__item">Contact</li>
                 </ul>
+                <button onClick={this.toggleMenu}>
+                    <FontAwesomeIcon icon={faAngleLeft} />
+                </button>
             </nav>
         )
     }
