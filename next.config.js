@@ -1,4 +1,13 @@
+const withPlugins = require('next-compose-plugins')
 const withSass = require('@zeit/next-sass')
-module.exports = withSass({
-  /* config options here */
-})
+const withImages = require('next-images');
+
+module.exports = withPlugins(
+  [
+    withSass,
+    withImages
+  ],
+  {
+    distDir: "./.next"
+  }
+)
