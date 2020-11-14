@@ -4,23 +4,24 @@
     display: flex;
     justify-content: space-between;
     height: auto;
-    position: absolute;
+    position: fixed;
     top: 0;
     z-index: 2;
-    background: linear-gradient(rgba(0,0,0,0.4), transparent);
+    background: rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(255, 208, 136, 0.3);
     .menu {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
         margin: 0 auto;
-        padding: 40px 0px;
+        padding: 10px 0px;
         &__item {
             position: relative;
             margin: 0 25px;
             list-style-type: none;
             text-transform: uppercase;
-            color: white;
+            color: #FFD088;
             font-weight: 400;
             text-align: center;
             cursor: pointer;
@@ -39,7 +40,7 @@
                 transition: opacity 200ms;
             }
             &:hover {
-                color: #FFD088;
+                // color: #FFD088;
 
                 &:after {
                     opacity: 1;
@@ -58,7 +59,7 @@
             }
             img {
                 transition: all 200ms;
-                height: 97px;
+                height: 55px;
             }
         }
     }
