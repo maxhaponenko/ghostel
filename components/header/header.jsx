@@ -17,19 +17,20 @@ export default class Header extends React.PureComponent {
     render() {
         return (
             <nav className="main-nav">
-                <ul className={`menu ${this.state.showMenu ? 'show' : ''}`}>
-                    <li className="menu__item logo">
-                        <img src="/images/logo.png"></img>
-                    </li>
-                    <li className="menu__item">Home</li>
-                    <li className="menu__item">Our story</li>
+                <div className="container">
 
-                    <li className="menu__item">Bookings</li>
-                    <li className="menu__item">Contact</li>
-                </ul>
-                <button onClick={this.toggleMenu}>
-                    <FontAwesomeIcon icon={faAngleLeft} />
-                </button>
+                    <ul className={`menu ${this.state.showMenu ? 'show' : ''}`}>
+                        <li className="menu__item logo">
+                            <img src="/images/logo.png"></img>
+                        </li>
+                        <li className="menu__item">About us</li>
+                        <li className="menu__item">Rooms</li>
+                        <li className="menu__item">Contact</li>
+                    </ul>
+                    <button onClick={this.toggleMenu}>
+                        <FontAwesomeIcon icon={faAngleLeft} />
+                    </button>
+                </div>
             </nav>
         )
     }
