@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import LanguageToggler from './language-toggler/language-toggler'
 import './header.scss';
 
 export default class Header extends React.PureComponent {
@@ -26,10 +27,12 @@ export default class Header extends React.PureComponent {
                         <li className="menu__item">About us</li>
                         <li className="menu__item">Rooms</li>
                         <li className="menu__item">Contact</li>
+                        <LanguageToggler />
                     </ul>
                     <button onClick={this.toggleMenu}>
                         <FontAwesomeIcon icon={faAngleLeft} />
                     </button>
+
                 </div>
             </nav>
         )

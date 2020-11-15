@@ -19,13 +19,17 @@ export default function DefaultSlider({ children }) {
     return (
         <Slider className="main-slider" {...settings} >
             <div className="main-slider__first-slide">
-                {/* <h2>Slide 1</h2> */}
+                <p>
+                    <span>Welcome</span> 
+                    <span>home, dear</span> 
+                    <span>travaler!</span>
+                </p>
             </div>
             <div className="main-slider__second-slide">
-                {/* <h2>Slide 2</h2> */}
+            
             </div>
             <div className="main-slider__third-slide">
-                {/* <h2>Slide 3</h2> */}
+            
             </div>
         </Slider>
     )
