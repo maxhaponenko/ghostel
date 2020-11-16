@@ -18,8 +18,6 @@ export default class LanguageToggler extends React.Component {
         const rotateText = this.state.position === ENG ? 'rotate(180deg)' : 'rotate(-180deg)'
         this.iconRef.current.style.transform = rotateText;
 
-        debugger
-
         this.setState({
             position: newPosition
         })
