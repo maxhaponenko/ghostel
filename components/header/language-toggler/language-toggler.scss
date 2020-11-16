@@ -9,9 +9,11 @@
     cursor: pointer;
     display: flex;
     overflow: hidden;
+    transition: all 200ms ease-in-out;
     &:hover {
-        .language-toggler__toggler {
-            background-color:  rgba(255, 208, 136, 0.8);
+        border: 1px solid rgba(255, 208, 136, 0.65);
+        .language-toggler__icon {
+            color: rgba(255, 208, 136, 0.8);
         }
     }
     
@@ -19,7 +21,7 @@
         position: relative;
         display: flex;
         align-items: center;
-        transition: all 200ms ease-in-out;
+        transition: all 250ms ease-in-out;
         
         &.eng {
             left: 0;
@@ -46,9 +48,16 @@
         width: 25px;
         height: 24px;
         border-radius: 100%;
-        background-color:  rgba(255, 208, 136, 0.5);
+        background-color:  rgba(255, 208, 136, 0.4);
         border: 1px solid rgba(255, 208, 136, 0.5);
         flex-shrink: 0;
-        transition: 200ms all ease-in-out;
+        transition: 300ms all ease-in-out;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &__icon {  
+        color: rgba(255, 208, 136, 0.5);
+        position: relative;
     }
 }
