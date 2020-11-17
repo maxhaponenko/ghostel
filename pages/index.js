@@ -11,7 +11,7 @@ export default class Home extends React.Component {
       <>
         <Header />
         <Slider />
-        <div style={{height: 200}}>
+        <div className="mp-our-story">                                                                                                                                                                                               ">
           Some content
           <img src={Image1} />
         </div>
