@@ -13,7 +13,7 @@ export default class Home extends React.Component {
         <Slider />
         <div className="mp-our-story">                                                                                                                                                                                               ">
           Some content
-          <img src={Image1} />
+          {/* <img src={Image1} /> */}
         </div>
 
       </>

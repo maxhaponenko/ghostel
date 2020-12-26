@@ -1,6 +1,12 @@
 import "../public/styles/index.scss";
+import { Provider } from 'react-redux';
+import store from 'configure-store';
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return (
+    <Provider store={store}>
+      <Component {...pageProps} />
+    </Provider>
+  );
 }
