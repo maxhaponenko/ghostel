@@ -29,7 +29,6 @@ export default class Header extends React.PureComponent {
                         <li className="menu__item">Rooms</li>
                         <li className="menu__item">Contact</li>
                         <LanguageTogglerNew />
-                        <LanguageToggler />
                     </ul>
                     <button onClick={this.toggleMenu}>
                         <FontAwesomeIcon icon={faAngleLeft} />
