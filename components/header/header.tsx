@@ -1,11 +1,14 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import LanguageToggler from './language-toggler-old/language-toggler'
-import LanguageTogglerNew from './language-toggler/language-toggler'
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import LanguageToggler from './language-toggler/language-toggler'
 import './header.scss';
 
-export default class Header extends React.PureComponent {
+class State {
+    showMenu: boolean;
+}
+
+export default class Header extends React.PureComponent<any, State> {
 
     state = {
         showMenu: false,
@@ -28,7 +31,7 @@ export default class Header extends React.PureComponent {
                         <li className="menu__item">About us</li>
                         <li className="menu__item">Rooms</li>
                         <li className="menu__item">Contact</li>
-                        <LanguageTogglerNew />
+                        <LanguageToggler />
                     </ul>
                     <button onClick={this.toggleMenu}>
                         <FontAwesomeIcon icon={faAngleLeft} />

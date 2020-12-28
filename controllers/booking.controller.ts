@@ -15,7 +15,7 @@ const stateController = new StateController<BookingState>(
 )
 
 class Actions {
-
+    
 }
 
 class Selectors {

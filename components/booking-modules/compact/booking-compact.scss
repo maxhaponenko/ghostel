@@ -1,0 +1,12 @@
+.booking-compact {
+    // width: 150px;
+    // height: 100px;
+    &__dates {
+        display: flex;
+        width: 100%;
+    }
+    &__guests {
+        display: flex;
+        width: 100%;
+    }
+}

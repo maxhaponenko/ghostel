@@ -1,7 +1,14 @@
 import './tumbler.scss';
 import React from 'react';
 
-export default class Tumbler extends React.Component {
+class OwnProps {
+    toggle: () => void;
+    value: boolean;
+    labelOn: string;
+    labelOff: string;
+}
+
+export default class Tumbler extends React.Component<OwnProps, any> {
 
     render() {
         return (
