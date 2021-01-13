@@ -1,20 +1,21 @@
 import React from 'react';
-import Header from 'components/header/header';
-import Slider from 'components/main-page-slider/slider';
-
+import styled from 'styled-components'
 export default class Home extends React.Component {
 
   render() {
 
     return (
-      <>
-        <Header />
-        <Slider />
-        <div className="mp-our-story">      
+      <Header>
 
-        </div>
-      </>
-
+      </Header>
     );
   }
 }
+
+
+const Header = styled.header`
+  position: relative;
+  width: 100%;
+  height: 142px;
+  background: linear-gradient(rgba(0,0,0,0.7), transparent);
+`
