@@ -46,15 +46,16 @@ const Toggler = styled.div`
     align-items: center;
     &:hover {
         .second-language {
-            transform: translate(-179%, -10%);
+            transform: translate(-179%, -10%) rotate(-360deg);
             &:hover {
-                transform: translate(-179%, -10%) scale(1.03);
+                transform: translate(-179%, -10%) rotate(-15deg);
             }
         }
         .third-language {
-            transform: translate(-88%, 89%);
+            transform: translate(-88%, 89%) rotate(-360deg);
+            
             &:hover {
-                transform: translate(-88%, 89%) scale(1.03);
+                transform: translate(-88%, 89%) rotate(25deg);
             }
         }
     }
@@ -78,7 +79,7 @@ const Toggler = styled.div`
         border: 2px solid white;
         background-size: cover;
         box-shadow: 0 1px 1px rgba(0,0,0,0.5);
-        transition: all 50ms ease-in-out;
+        transition: all 300ms cubic-bezier(.65,.47,.51,1.2);
         cursor: pointer;
         
     }
@@ -93,7 +94,7 @@ const Toggler = styled.div`
         border: 2px solid white;
         background-size: cover;
         box-shadow: 0 1px 1px rgba(0,0,0,0.5);
-        transition: all 50ms ease-in-out;
+        transition: all 200ms cubic-bezier(.65,.47,.51,1.2);
         cursor: pointer;
     }
     .eng {
