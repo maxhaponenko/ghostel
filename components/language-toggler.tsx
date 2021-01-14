@@ -26,12 +26,25 @@ export class LanguageToggler extends Component {
         if (language === Language.RU) return 'ru'
     }
 
+    selectSecondLanguage = () => {
+        this.setState({
+            selectedLanguage: this.state.secondLanguage,
+            secondLanguage: this.state.selectedLanguage
+        })
+    }
+    selectThirdLanguage = () => {
+        this.setState({
+            selectedLanguage: this.state.thirdLanguage,
+            thirdLanguage: this.state.selectedLanguage
+        })
+    }
+
     render() {
         return (
             <Toggler>
                 <div className={`selected-language ${this.getLanguageClass(this.state.selectedLanguage)}`}></div>
-                <div className={`second-language ${this.getLanguageClass(this.state.secondLanguage)}`}></div>
-                <div className={`third-language ${this.getLanguageClass(this.state.thirdLanguage)}`}></div>
+                <div className={`second-language ${this.getLanguageClass(this.state.secondLanguage)}`} onClick={this.selectSecondLanguage}></div>
+                <div className={`third-language ${this.getLanguageClass(this.state.thirdLanguage)}`} onClick={this.selectThirdLanguage}></div>
             </Toggler>
         )
     }
