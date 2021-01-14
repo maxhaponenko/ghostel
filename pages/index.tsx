@@ -1,21 +1,16 @@
 import React from 'react';
 import styled from 'styled-components'
+import Header from 'components/header'
+import FirstScreen from 'components/main-page/first-screen'
 export default class Home extends React.Component {
 
   render() {
 
     return (
-      <Header>
-
-      </Header>
+      <>
+        <Header />
+        <FirstScreen />
+      </>
     );
   }
 }
-
-
-const Header = styled.header`
-  position: relative;
-  width: 100%;
-  height: 142px;
-  background: linear-gradient(rgba(0,0,0,0.7), transparent);
-`
