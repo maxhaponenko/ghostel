@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link'
 import LogoPng from 'public/images/logo.png';
-import DiscountBadge from 'components/discount-badge';
+import DiscountBadge from 'components/cashback/cashback.entry';
 import LanguageToggler from 'components/language-toggler';
 
 class State {
@@ -39,9 +39,10 @@ export default class Header extends React.PureComponent<any, State> {
 }
 
 const Panel = styled.div`
-    position: absolute;
+    position: fixed;
     z-index: 100;
     width: 100%;
+    max-width: 100vw;
     height: 142px;
     background: linear-gradient(rgba(0,0,0,0.7), transparent);
     .container {
@@ -50,6 +51,11 @@ const Panel = styled.div`
     }
     .logo {
         padding: 19px 0;
+        height: 100%; 
+        width: 165px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         img {
             height: 95px; 
             width: auto;
