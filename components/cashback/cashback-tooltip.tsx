@@ -34,10 +34,6 @@ export class CachbackTooltip extends Component<StateProps & OwnProps> {
             this.setState({ isActive: true}, () => {
                 window.addEventListener('click', this.handleoutsideClickBinded)
             })
-        } else {
-            this.setState({ isActive: false }, () => {
-                window.removeEventListener('click', this.handleoutsideClickBinded)
-            })
         }
     }
 
