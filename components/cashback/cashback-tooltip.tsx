@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, RefObject } from 'react'
 import { connect } from 'react-redux'
 import { AppState } from 'root.reducer'
 import styled from 'styled-components'
@@ -14,6 +14,37 @@ class StateProps {
 
 export class CachbackTooltip extends Component<StateProps & OwnProps> {
 
+    tooltipRef: RefObject<any> = React.createRef()
+
+    state = {
+        isActive: false,
+    }
+
+    handleOutsideClick = (e) => {
+        e.stopPropagation()
+        e.preventDefault()
+        if (this.tooltipRef && !this.tooltipRef.current.contains(e.target)) {
+            this.setState({ isActive: false })
+        }
+    }
+    handleoutsideClickBinded = this.handleOutsideClick.bind(this)
+
+    toggleTooltip = () => {
+        if (!this.state.isActive) {
+            this.setState({ isActive: true}, () => {
+                window.addEventListener('click', this.handleoutsideClickBinded)
+            })
+        } else {
+            this.setState({ isActive: false }, () => {
+                window.removeEventListener('click', this.handleoutsideClickBinded)
+            })
+        }
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('click', this.handleoutsideClickBinded)
+    }
+
     renderCurrentStep = () => {
         const { currentStep } = this.props
         if (currentStep === CurrentStep.Initial) {
@@ -28,7 +59,7 @@ export class CachbackTooltip extends Component<StateProps & OwnProps> {
 
     render() {
         return (
-            <Tooltip>
+            <Tooltip ref={this.tooltipRef} isActive={this.state.isActive} onClick={() => this.toggleTooltip()}>
                 {this.props.children}
                 <div className="tooltip-panel">
                     {this.renderCurrentStep()}
@@ -40,13 +71,8 @@ export class CachbackTooltip extends Component<StateProps & OwnProps> {
 
 const Tooltip = styled.div`
     position: relative;
-    &:hover {
-        .tooltip-panel {
-            display: block;
-        }
-    }
     .tooltip-panel {
-        display: block;
+        display: ${(props: any) => props.isActive ? 'block' : 'none'};
         position: absolute;
         top: 100%;
         right: 0;
