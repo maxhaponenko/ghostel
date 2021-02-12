@@ -78,6 +78,7 @@ const Btn: any = styled.button`
         if (props.size === 'lg') return '18px'
         if (props.size === 'xl') return '20px'
     }};
+    font-weight: 300;
     padding: ${(props: any) => {
         if (props.size === 'sm') return '0.25rem 0.6rem'
         if (props.size === 'md') return '0.2rem 0.4rem'
@@ -98,7 +99,10 @@ const Btn: any = styled.button`
     cursor: pointer;
     transition: all 100ms ease-in-out;
     &:hover {
-        filter: brightness(85%);
+        filter: brightness(105%);
+    }
+    &:active, &:focus {
+        outline: none;
     }
 
     pointer-events: ${(props: any) => {
@@ -108,6 +112,7 @@ const Btn: any = styled.button`
 
     svg {
         position: absolute;
+        display: ${(props: any) => props.isLoading ? 'block' : 'none'};
         opacity: ${(props: any) => props.isLoading ? 1 : 0};
         color: ${(props: any) => {
             if (props.type === 'default') {
