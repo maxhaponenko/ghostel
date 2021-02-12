@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import background from 'public/images/first-screen-bg.jpg';
+import BookingModule from 'components/booking/booking-module';
 
 export default class FirstScreen extends Component {
     render() {
@@ -13,6 +14,9 @@ export default class FirstScreen extends Component {
                         home, dear<br />
                         traveler!
                     </h1>
+                    <div className="booking-module-container">
+                        <BookingModule />
+                    </div>
                 </div>
 
 
@@ -30,6 +34,7 @@ const Section = styled.div`
     background-position: center;
     .container {
         height: 100%;
+        position: relative;
     }
     h1 {
         position: relative;
@@ -46,5 +51,12 @@ const Section = styled.div`
         @media (max-width: 1999px) {
             font-size: 65px;
         }
+    }
+    .booking-module-container {
+        width: 887px;
+        position: absolute;
+        bottom: 100px;
+        right: 10px;
+        padding-right: 20px;
     }
 `
