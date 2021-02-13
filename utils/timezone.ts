@@ -10,8 +10,8 @@ export const UTCOffset = () => {
 export const isDaylightSavingTime = () => {
     const MARCH_INDEX = 2
     const OCTOBER_INDEX = 9
-    const DSTStart = lastSunday(new Date().getFullYear(), MARCH_INDEX)
-    const DSTEnd = lastSunday(new Date().getFullYear(), OCTOBER_INDEX)
+    const DSTStart = lastSundayInMonth(new Date().getFullYear(), MARCH_INDEX)
+    const DSTEnd = lastSundayInMonth(new Date().getFullYear(), OCTOBER_INDEX)
     const now = new Date().getTime()
     
     if (now > DSTStart && now < DSTEnd) {
@@ -21,10 +21,11 @@ export const isDaylightSavingTime = () => {
     }
 }
 
-const lastSunday = (year, month) => {
+const lastSundayInMonth = (year: number, month: number): number  => {
     var date = new Date(year,month,1,12);
     let weekday = date.getDay();
     let dayDiff = weekday === 0 ? 7 : weekday;
     let lastSunday = date.setDate(date.getDate() - dayDiff);
     return lastSunday
 }
+

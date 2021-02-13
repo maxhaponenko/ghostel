@@ -17,8 +17,8 @@ class BookingModule extends Component {
                     <span>26 February 2021</span>
                     <DatePicker 
                         className="date-picker" 
-                        selectedStart={new Date('2020-02-12T03:24:00')}
-                        selectedEnd={new Date('2020-02-13T03:24:00')}
+                        selectedStart={new Date('2021-01-12T03:24:00')}
+                        selectedEnd={new Date('2021-01-13T03:24:00')}
                         onSelectStart={() => {}}
                         onSelectEnd={() => {}}
                     />

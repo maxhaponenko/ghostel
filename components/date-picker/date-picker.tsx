@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment';
+import { firstWeekdayInMonth, lastWeekdayInMonth } from './utils'
 
 class OwnProps {
     selectedStart: Date;
@@ -44,12 +45,24 @@ export default class DatePicker extends Component<OwnProps, State> {
         x.setDate(0);
     }
 
+    countOfDaysFromPreviousMonth = () => {
+        const activeMonth = this.state.activeMonth
+        const firstWeekday = firstWeekdayInMonth(activeMonth.getFullYear(), activeMonth.getMonth())
+        if (firstWeekday - 1 === -1) debugger
+        return firstWeekday - 1
+    }
+    cpuntOfDaysFromNextMonth = () => {
+        const activeMonth = this.state.activeMonth
+        const lastWeekDay = lastWeekdayInMonth(activeMonth.getFullYear(), activeMonth.getMonth())
+        return 7 - lastWeekDay
+    }
+
     render() {
 
 
         const numberOfDaysInMonth = new Date(this.state.activeMonth.getFullYear(), this.state.activeMonth.getMonth()+1, 0).getDate();
-        const firstWeekPreviousMonthDays = 1
-        const lastWeekNextMonthDays = 5
+        const firstWeekPreviousMonthDays = this.countOfDaysFromPreviousMonth()
+        const lastWeekNextMonthDays = this.cpuntOfDaysFromNextMonth()
 
         return (
             <Panel isNextBtnActive={true} isPrevBtnActive={true} {...this.props}>
@@ -68,13 +81,13 @@ export default class DatePicker extends Component<OwnProps, State> {
                     <span>Sun</span>
                 </div>
                 <div className="days">
-                    {[...Array(firstWeekPreviousMonthDays)].map(item => (
+                    {([...Array(firstWeekPreviousMonthDays)] || []).map(item => (
                         <span></span>
                     ))}
                     {[...Array(numberOfDaysInMonth)].map((item, index) => (
                         <span>{index + 1}</span>
                     ))}
-                    {[...Array(lastWeekNextMonthDays)].map(item => (
+                    {([...Array(lastWeekNextMonthDays)] || []).map(item => (
                         <span></span>
                     ))}
                 </div>
@@ -85,7 +98,7 @@ export default class DatePicker extends Component<OwnProps, State> {
 
 const Panel = styled.div`
     width: 350px;
-    height: 335px;
+    min-height: 335px;
     border-radius: 20px;
     box-shadow: 0 1px 1px rgba(0,0,0,0.5);
     background-color: white;
@@ -148,6 +161,7 @@ const Panel = styled.div`
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        padding-bottom: 16px;
         span {
             width: 36px;
             height: 36px;
