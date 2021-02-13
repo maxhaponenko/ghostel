@@ -1,11 +1,12 @@
 import { StateController } from 'state.controller';
+import { UTCOffset } from 'utils/timezone'
 
 class BookingState {
-
+    hotelUTCOffset: number;
 }
 
 const defaultState: BookingState = {
-
+    hotelUTCOffset: UTCOffset(),
 }
 
 

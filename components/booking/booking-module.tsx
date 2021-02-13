@@ -4,6 +4,7 @@ import Button from 'components/forms/button'
 import styled from 'styled-components'
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt, faUserFriends } from '@fortawesome/free-solid-svg-icons'
+import DatePicker from 'components/date-picker/date-picker'
 
 class BookingModule extends Component {
     render() {
@@ -14,6 +15,13 @@ class BookingModule extends Component {
                     <span>25 February 2021</span>
                     <span style={{ marginRight: 15, marginLeft: 15 }}>-</span>
                     <span>26 February 2021</span>
+                    <DatePicker 
+                        className="date-picker" 
+                        selectedStart={new Date('2020-02-12T03:24:00')}
+                        selectedEnd={new Date('2020-02-13T03:24:00')}
+                        onSelectStart={() => {}}
+                        onSelectEnd={() => {}}
+                    />
                 </div>
                 <div className="guests">
                     <FAIcon icon={faUserFriends} />
@@ -49,17 +57,22 @@ const Panel = styled.div`
                 color: #503109;
             }
         }
-        svg {
+        > svg {
             color: #FA9917;
             margin-right: 20px;
             position: relative;
             top: -1px;
             transition: left 100ms ease-in-out;
         }
-        span {
+        > span {
             font-size: 16px;
             font-weight: 400;
             white-space: nowrap;
+        }
+        .date-picker {
+            position: absolute;
+            bottom: 115%;
+            left: 30px;
         }
     }
     .guests {
