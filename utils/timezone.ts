@@ -1,7 +1,7 @@
-export const UTCOffset = () => {
-    const KIEV_UTC_OFFSET = 2
+export const kievUTCOffset = () => {
+    const KIEV_UTC_OFFSET = 120
     if (isDaylightSavingTime()) {
-        return KIEV_UTC_OFFSET + 1
+        return KIEV_UTC_OFFSET + 60
     } else {
         return KIEV_UTC_OFFSET
     }

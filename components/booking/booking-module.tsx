@@ -5,9 +5,22 @@ import styled from 'styled-components'
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt, faUserFriends } from '@fortawesome/free-solid-svg-icons'
 import DatePicker from 'components/date-picker/date-picker'
+import { AppState } from 'root.reducer'
 
-class BookingModule extends Component {
+class StateProps {
+    hotelUTCOffset: number;
+}
+class BookingModule extends Component<StateProps, {}> {
     render() {
+
+        const now = new Date()
+        const userUTCOffset = now.getTimezoneOffset()
+        now.setMinutes(now.getMinutes() + userUTCOffset + this.props.hotelUTCOffset)
+        const hotelCurrentTime = now
+
+        const selectedCheckinDate = new Date(hotelCurrentTime.getFullYear(), hotelCurrentTime.getMonth(), hotelCurrentTime.getDate() + 1)
+        const selectedCheckoutDate = new Date(hotelCurrentTime.getFullYear(), hotelCurrentTime.getMonth(), hotelCurrentTime.getDate() + 2)
+
         return (
             <Panel>
                 <div className="dates">
@@ -17,8 +30,8 @@ class BookingModule extends Component {
                     <span>26 February 2021</span>
                     <DatePicker 
                         className="date-picker" 
-                        selectedStart={new Date('2021-01-12T03:24:00')}
-                        selectedEnd={new Date('2021-01-13T03:24:00')}
+                        selectedStart={selectedCheckinDate}
+                        selectedEnd={selectedCheckoutDate}
                         onSelectStart={() => {}}
                         onSelectEnd={() => {}}
                     />
@@ -107,8 +120,8 @@ const Panel = styled.div`
     }
 `
 
-const mapStateToProps = (state) => ({
-
+const mapStateToProps = (state: AppState) => ({
+    hotelUTCOffset: state.booking.hotelUTCOffset
 })
 
 const mapDispatchToProps = {

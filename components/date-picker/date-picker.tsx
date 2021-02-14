@@ -7,7 +7,7 @@ import { firstWeekdayInMonth, lastWeekdayInMonth } from './utils'
 
 class OwnProps {
     selectedStart: Date;
-    selectedEnd: Date;
+    selectedEnd: Date; 
     onSelectStart: (date: Date) => void;
     onSelectEnd: (date: Date) => void;
     [key: string]: any
@@ -48,10 +48,9 @@ export default class DatePicker extends Component<OwnProps, State> {
     countOfDaysFromPreviousMonth = () => {
         const activeMonth = this.state.activeMonth
         const firstWeekday = firstWeekdayInMonth(activeMonth.getFullYear(), activeMonth.getMonth())
-        if (firstWeekday - 1 === -1) debugger
         return firstWeekday - 1
     }
-    cpuntOfDaysFromNextMonth = () => {
+    countOfDaysFromNextMonth = () => {
         const activeMonth = this.state.activeMonth
         const lastWeekDay = lastWeekdayInMonth(activeMonth.getFullYear(), activeMonth.getMonth())
         return 7 - lastWeekDay
@@ -59,10 +58,22 @@ export default class DatePicker extends Component<OwnProps, State> {
 
     render() {
 
+        const { activeMonth } = this.state
+        const { selectedStart, selectedEnd } = this.props
 
-        const numberOfDaysInMonth = new Date(this.state.activeMonth.getFullYear(), this.state.activeMonth.getMonth()+1, 0).getDate();
-        const firstWeekPreviousMonthDays = this.countOfDaysFromPreviousMonth()
-        const lastWeekNextMonthDays = this.cpuntOfDaysFromNextMonth()
+        // Count of days
+        const firstRowPreviousMonthDays = this.countOfDaysFromPreviousMonth()
+        const lastRowNextMonthDays = this.countOfDaysFromNextMonth()
+        const numberOfDaysInMonth = new Date(this.state.activeMonth.getFullYear(), this.state.activeMonth.getMonth() + 1, 0).getDate();
+
+        const datesInMonth = [...Array(numberOfDaysInMonth)].map((item, index) => {
+            return new Date(activeMonth.getFullYear(), activeMonth.getMonth(), index + 1)
+        })
+
+        const isStartSelected = (item: Date) => selectedStart.getTime() == item.getTime()
+        const isEndSelected = (item: Date) => selectedEnd.getTime() == item.getTime()
+        const isBeforeNow = (item: Date) => item.getTime() < new Date().getTime()
+
 
         return (
             <Panel isNextBtnActive={true} isPrevBtnActive={true} {...this.props}>
@@ -81,14 +92,19 @@ export default class DatePicker extends Component<OwnProps, State> {
                     <span>Sun</span>
                 </div>
                 <div className="days">
-                    {([...Array(firstWeekPreviousMonthDays)] || []).map(item => (
-                        <span></span>
+                    {([...Array(firstRowPreviousMonthDays)] || []).map((item, index) => (
+                        <div key={`day-${index}`} > </div>
                     ))}
-                    {[...Array(numberOfDaysInMonth)].map((item, index) => (
-                        <span>{index + 1}</span>
+                    {datesInMonth.map((item, index) => (
+                        <div key={`day-${index}`} className={`${isStartSelected(item) || isEndSelected(item) ? 'selected' : ''} ${isBeforeNow(item) ? 'disabled' : ''}`} >
+                            <div className={`liner ${isStartSelected(item) ? 'start' : ''} ${isEndSelected(item) ? 'end' : ''}`}></div>
+                            <span className={`date ${isStartSelected(item) ? 'start' : ''} ${isEndSelected(item) ? 'end' : ''}`}>
+                                {item.getDate()}
+                            </span>
+                        </div>
                     ))}
-                    {([...Array(lastWeekNextMonthDays)] || []).map(item => (
-                        <span></span>
+                    {([...Array(lastRowNextMonthDays)] || []).map((item, index) => (
+                        <div key={`day-${index}`} > </div>
                     ))}
                 </div>
             </Panel>
@@ -147,6 +163,7 @@ const Panel = styled.div`
         justify-content: center;
         pointer-events: none;
         user-select: none;
+        margin-top: 5px;
         margin-bottom: 10px;
         span {
             font-size: 12px;
@@ -162,13 +179,56 @@ const Panel = styled.div`
         flex-wrap: wrap;
         justify-content: center;
         padding-bottom: 16px;
-        span {
+        > div {
             width: 36px;
             height: 36px;
             margin: 4px 4px;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            .liner {
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background-color: #FFE9B8;
+                &.start {
+                    display: block;
+                    border-top-left-radius: 100%;
+                    border-bottom-left-radius: 100%;
+                }
+            }
+            .date {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 100;
+                box-sizing: border-box;
+                border: 1px solid transparent;
+                background-color: white;
+                border-radius: 100%;
+                cursor: pointer;        
+            }
+            &.selected {
+                .date {
+                    border: 1px solid #FA9917;
+                    font-weight: 500;
+                }
+            }
+            &.disabled {
+                opacity: 0.3;
+                pointer-events: none;
+            }
+            &:hover {
+                .date {
+                    border: 1px solid #FA9917;
+                }
+            }
         }
     }
 `
