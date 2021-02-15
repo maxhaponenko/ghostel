@@ -4,10 +4,13 @@ import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment';
 import { firstWeekdayInMonth, lastWeekdayInMonth } from './utils'
+import { SelectionStep } from './selection-steps'
+
+
 
 class OwnProps {
     selectedStart: Date;
-    selectedEnd: Date; 
+    selectedEnd: Date;
     onSelectStart: (date: Date) => void;
     onSelectEnd: (date: Date) => void;
     [key: string]: any
@@ -15,16 +18,28 @@ class OwnProps {
 
 class State {
     activeMonth: Date;
+    activeStep: SelectionStep;
 }
 
 export default class DatePicker extends Component<OwnProps, State> {
 
     state = {
-        activeMonth: this.props.selectedEnd
+        activeMonth: this.props.selectedEnd,
+        activeStep: SelectionStep.None,
     }
 
     onSelect = (date: Date) => {
-        this.props.onSelectStart(date)
+
+        const { selectedStart, selectedEnd } = this.props
+        const newDateTimestamp = date.getTime()
+        const startTimestamp = selectedStart.getTime()
+        const endTimestamp = selectedEnd.getTime()
+
+        if (newDateTimestamp < endTimestamp) {
+            this.props.onSelectStart(date)
+        } else {
+            this.props.onSelectStart(date)
+        }
     }
 
     getMonthAndYear = () => {
@@ -96,7 +111,11 @@ export default class DatePicker extends Component<OwnProps, State> {
                         <div key={`day-${index}`} > </div>
                     ))}
                     {datesInMonth.map((item, index) => (
-                        <div key={`day-${index}`} className={`${isStartSelected(item) || isEndSelected(item) ? 'selected' : ''} ${isBeforeNow(item) ? 'disabled' : ''}`} >
+                        <div 
+                            key={`day-${index}`} 
+                            className={`${isStartSelected(item) || isEndSelected(item) ? 'selected' : ''} ${isBeforeNow(item) ? 'disabled' : ''}`} 
+                            onClick={() => this.onSelect(item)}
+                        >
                             <div className={`liner ${isStartSelected(item) ? 'start' : ''} ${isEndSelected(item) ? 'end' : ''}`}></div>
                             <span className={`date ${isStartSelected(item) ? 'start' : ''} ${isEndSelected(item) ? 'end' : ''}`}>
                                 {item.getDate()}
@@ -199,6 +218,29 @@ const Panel = styled.div`
                     display: block;
                     border-top-left-radius: 100%;
                     border-bottom-left-radius: 100%;
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        width: 4px;
+                        height: 100%;
+                        position: absolute;
+                        right: -4px;
+                        background-color: #FFE9B8;
+                    }
+                }
+                &.end {
+                    display: block;
+                    border-top-right-radius: 100%;
+                    border-bottom-right-radius: 100%;
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        width: 4px;
+                        height: 100%;
+                        position: absolute;
+                        left: -4px;
+                        background-color: #FFE9B8;
+                    }
                 }
             }
             .date {
@@ -225,7 +267,7 @@ const Panel = styled.div`
                 pointer-events: none;
             }
             &:hover {
-                .date {
+                > .date {
                     border: 1px solid #FA9917;
                 }
             }

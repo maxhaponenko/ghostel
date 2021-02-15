@@ -10,16 +10,52 @@ import { AppState } from 'root.reducer'
 class StateProps {
     hotelUTCOffset: number;
 }
+class State {
+    selectedCheckinDate: Date;
+    selectedCheckoutDate: Date;
+}
 class BookingModule extends Component<StateProps, {}> {
-    render() {
 
+    setCheckinDate = () => {
         const now = new Date()
         const userUTCOffset = now.getTimezoneOffset()
         now.setMinutes(now.getMinutes() + userUTCOffset + this.props.hotelUTCOffset)
         const hotelCurrentTime = now
 
         const selectedCheckinDate = new Date(hotelCurrentTime.getFullYear(), hotelCurrentTime.getMonth(), hotelCurrentTime.getDate() + 1)
+
+        return selectedCheckinDate
+    }
+    setCheckoutDate = () => {
+        const now = new Date()
+        const userUTCOffset = now.getTimezoneOffset()
+        now.setMinutes(now.getMinutes() + userUTCOffset + this.props.hotelUTCOffset)
+        const hotelCurrentTime = now
+
         const selectedCheckoutDate = new Date(hotelCurrentTime.getFullYear(), hotelCurrentTime.getMonth(), hotelCurrentTime.getDate() + 2)
+
+        return selectedCheckoutDate
+    }
+
+    state = {
+        selectedCheckinDate: this.setCheckinDate(),
+        selectedCheckoutDate: this.setCheckoutDate()
+    }
+
+    
+
+
+    onSelectStart = (date: Date) => {
+        this.setState({ selectedCheckinDate: date})
+    }
+    onSelectEnd = (date: Date) => {
+        this.setState({ selectedCheckoutDate: date})
+    }
+    
+
+    render() {
+
+        
 
         return (
             <Panel>
@@ -30,10 +66,10 @@ class BookingModule extends Component<StateProps, {}> {
                     <span>26 February 2021</span>
                     <DatePicker 
                         className="date-picker" 
-                        selectedStart={selectedCheckinDate}
-                        selectedEnd={selectedCheckoutDate}
-                        onSelectStart={() => {}}
-                        onSelectEnd={() => {}}
+                        selectedStart={this.state.selectedCheckinDate}
+                        selectedEnd={this.state.selectedCheckoutDate}
+                        onSelectStart={this.onSelectStart}
+                        onSelectEnd={this.onSelectEnd}
                     />
                 </div>
                 <div className="guests">
