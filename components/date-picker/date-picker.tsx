@@ -1,44 +1,93 @@
-import React, { Component } from 'react'
+import React, { Component, RefObject, MouseEvent } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment';
 import { firstWeekdayInMonth, lastWeekdayInMonth } from './utils'
-import { SelectionStep } from './selection-steps'
+import { SelectionStage } from './selection-stages'
 
 
 
 class OwnProps {
     selectedStart: Date;
     selectedEnd: Date;
-    onSelectStart: (date: Date) => void;
-    onSelectEnd: (date: Date) => void;
+    onRangeSelected: (startDate: Date, endDate: Date) => void;
+    calendarClassNames: string;
     [key: string]: any
 }
 
 class State {
+    isOpen: boolean;
+
     activeMonth: Date;
-    activeStep: SelectionStep;
+    stage: SelectionStage;
+
+    start: Date;
+    end: Date;
 }
 
 export default class DatePicker extends Component<OwnProps, State> {
 
     state = {
+        isOpen: false,
+
         activeMonth: this.props.selectedEnd,
-        activeStep: SelectionStep.None,
+        stage: SelectionStage.Selected,
+
+        start: this.props.selectedStart,
+        end: this.props.selectedEnd,
     }
 
+    calendar: RefObject<any> = React.createRef();
+
+    openCalendar = () => {
+        if (!this.state.isOpen) {
+            this.setState({ isOpen: true }, () => {
+                setTimeout(() => {
+                    addEventListener('click', this.handleOutsideClickBinded, { once: true })
+                }, 200)
+            })
+        }
+    }
+    handleOutsideClick = (e: MouseEvent) => {
+        if (this.calendar && !this.calendar.current.contains(e.target) && !!this.state.isOpen) {
+            this.setState({ isOpen: false }, () => {
+                removeEventListener('click', this.handleOutsideClickBinded)
+            })
+        }
+    }
+    handleOutsideClickBinded = this.handleOutsideClick.bind(this)
+
+
+
+    selectStart = (date: Date) => this.setState({ start: date })
+    selectEnd = (date: Date) => this.setState({ end: date })
+
+    setNoneStage = () => this.setState({ stage: SelectionStage.None })
+    setStartStage = () => this.setState({ stage: SelectionStage.Start })
+    setSelectedStage = () => this.setState({ stage: SelectionStage.Selected })
+
     onSelect = (date: Date) => {
-
-        const { selectedStart, selectedEnd } = this.props
+        const { start, stage } = this.state
         const newDateTimestamp = date.getTime()
-        const startTimestamp = selectedStart.getTime()
-        const endTimestamp = selectedEnd.getTime()
+        const startTimestamp = start.getTime()
 
-        if (newDateTimestamp < endTimestamp) {
-            this.props.onSelectStart(date)
-        } else {
-            this.props.onSelectStart(date)
+        if (stage === SelectionStage.Start) {
+            if (newDateTimestamp < startTimestamp) {
+                this.selectStart(date)
+                this.selectEnd(null)
+                this.setStartStage()
+            } else if (newDateTimestamp > startTimestamp) {
+                this.selectEnd(date)
+                this.setSelectedStage()
+                this.props.onRangeSelected(start, date)
+            } else {
+                return
+            }
+        } else if (stage === SelectionStage.Selected) {
+            this.selectStart(date)
+            this.selectEnd(null)
+            this.setStartStage()
         }
     }
 
@@ -74,7 +123,7 @@ export default class DatePicker extends Component<OwnProps, State> {
     render() {
 
         const { activeMonth } = this.state
-        const { selectedStart, selectedEnd } = this.props
+        const { start, end } = this.state
 
         // Count of days
         const firstRowPreviousMonthDays = this.countOfDaysFromPreviousMonth()
@@ -85,48 +134,58 @@ export default class DatePicker extends Component<OwnProps, State> {
             return new Date(activeMonth.getFullYear(), activeMonth.getMonth(), index + 1)
         })
 
-        const isStartSelected = (item: Date) => selectedStart.getTime() == item.getTime()
-        const isEndSelected = (item: Date) => selectedEnd.getTime() == item.getTime()
+        const isStartSelected = (item: Date) => start && start.getTime() == item.getTime()
+        const isEndSelected = (item: Date) => end && end.getTime() == item.getTime()
+        const isInRange = (item: Date) => start && end && item.getTime() > start.getTime() && item.getTime() < end.getTime()
         const isBeforeNow = (item: Date) => item.getTime() < new Date().getTime()
 
+        const getDateClassNames = (item: Date) => {
+            let classNames = ''
+            if (isStartSelected(item) || isEndSelected(item)) classNames = classNames.concat('selected ')
+            if (isBeforeNow(item)) classNames = classNames.concat('disabled ')
+            return classNames
+        }
 
         return (
-            <Panel isNextBtnActive={true} isPrevBtnActive={true} {...this.props}>
-                <header>
-                    <div className="prev" onClick={this.onPrevMonth}><FAIcon icon={faChevronLeft} /></div>
-                    <div className="month">{this.getMonthAndYear()}</div>
-                    <div className="next" onClick={this.onNextMonth}><FAIcon icon={faChevronRight} /></div>
-                </header>
-                <div className="days-abbreviations">
-                    <span>Mon</span>
-                    <span>Tue</span>
-                    <span>Wed</span>
-                    <span>Thu</span>
-                    <span>Fri</span>
-                    <span>Sat</span>
-                    <span>Sun</span>
-                </div>
-                <div className="days">
-                    {([...Array(firstRowPreviousMonthDays)] || []).map((item, index) => (
-                        <div key={`day-${index}`} > </div>
-                    ))}
-                    {datesInMonth.map((item, index) => (
-                        <div 
-                            key={`day-${index}`} 
-                            className={`${isStartSelected(item) || isEndSelected(item) ? 'selected' : ''} ${isBeforeNow(item) ? 'disabled' : ''}`} 
-                            onClick={() => this.onSelect(item)}
-                        >
-                            <div className={`liner ${isStartSelected(item) ? 'start' : ''} ${isEndSelected(item) ? 'end' : ''}`}></div>
-                            <span className={`date ${isStartSelected(item) ? 'start' : ''} ${isEndSelected(item) ? 'end' : ''}`}>
-                                {item.getDate()}
-                            </span>
-                        </div>
-                    ))}
-                    {([...Array(lastRowNextMonthDays)] || []).map((item, index) => (
-                        <div key={`day-${index}`} > </div>
-                    ))}
-                </div>
-            </Panel>
+            <div onClick={this.openCalendar} className={this.props.className ? this.props.className : ''}>
+                {this.props.children}
+                <Panel ref={this.calendar} isOpen={this.state.isOpen} isNextBtnActive={true} isPrevBtnActive={true} className={this.props.calendarClassNames ? this.props.calendarClassNames : ''} >
+                    <header>
+                        <div className="prev" onClick={this.onPrevMonth}><FAIcon icon={faChevronLeft} /></div>
+                        <div className="month">{this.getMonthAndYear()}</div>
+                        <div className="next" onClick={this.onNextMonth}><FAIcon icon={faChevronRight} /></div>
+                    </header>
+                    <div className="days-abbreviations">
+                        <span>Mon</span>
+                        <span>Tue</span>
+                        <span>Wed</span>
+                        <span>Thu</span>
+                        <span>Fri</span>
+                        <span>Sat</span>
+                        <span>Sun</span>
+                    </div>
+                    <div className="days">
+                        {([...Array(firstRowPreviousMonthDays)] || []).map((item, index) => (
+                            <div key={`day-${index}`} > </div>
+                        ))}
+                        {datesInMonth.map((item, index) => (
+                            <div
+                                key={`day-${index}`}
+                                className={getDateClassNames(item)}
+                                onClick={() => this.onSelect(item)}
+                            >
+                                <div className={`liner ${isStartSelected(item) ? 'start' : ''} ${isEndSelected(item) ? 'end' : ''} ${isInRange(item) ? 'in-range' : ''}`}></div>
+                                <span className={`date ${isStartSelected(item) ? 'start' : ''} ${isEndSelected(item) ? 'end' : ''}`}>
+                                    {item.getDate()}
+                                </span>
+                            </div>
+                        ))}
+                        {([...Array(lastRowNextMonthDays)] || []).map((item, index) => (
+                            <div key={`day-${index}`} > </div>
+                        ))}
+                    </div>
+                </Panel>
+            </div>
         )
     }
 }
@@ -138,6 +197,7 @@ const Panel = styled.div`
     box-shadow: 0 1px 1px rgba(0,0,0,0.5);
     background-color: white;
     cursor: default;
+    display: ${props => props.isOpen ? 'block' : 'none'};
     header {
         display: flex;
         justify-content: space-between;
@@ -228,6 +288,18 @@ const Panel = styled.div`
                         background-color: #FFE9B8;
                     }
                 }
+                &.in-range {
+                    display: block;
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        width: calc(100% + 8px);
+                        height: 100%;
+                        position: absolute;
+                        left: -4px;
+                        background-color: #FFE9B8;
+                    }
+                }
                 &.end {
                     display: block;
                     border-top-right-radius: 100%;
@@ -252,13 +324,13 @@ const Panel = styled.div`
                 z-index: 100;
                 box-sizing: border-box;
                 border: 1px solid transparent;
-                background-color: white;
                 border-radius: 100%;
                 cursor: pointer;        
             }
             &.selected {
                 .date {
                     border: 1px solid #FA9917;
+                    background-color: white;
                     font-weight: 500;
                 }
             }

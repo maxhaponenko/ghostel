@@ -4,6 +4,7 @@ import Button from 'components/forms/button'
 import styled from 'styled-components'
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt, faUserFriends } from '@fortawesome/free-solid-svg-icons'
+import moment from 'moment';
 import DatePicker from 'components/date-picker/date-picker'
 import { AppState } from 'root.reducer'
 
@@ -42,35 +43,39 @@ class BookingModule extends Component<StateProps, {}> {
         selectedCheckoutDate: this.setCheckoutDate()
     }
 
-    
+
 
 
     onSelectStart = (date: Date) => {
-        this.setState({ selectedCheckinDate: date})
+        this.setState({ selectedCheckinDate: date })
     }
     onSelectEnd = (date: Date) => {
-        this.setState({ selectedCheckoutDate: date})
+        this.setState({ selectedCheckoutDate: date })
     }
-    
+
 
     render() {
 
-        
+
 
         return (
             <Panel>
                 <div className="dates">
-                    <FAIcon icon={faCalendarAlt} />
-                    <span>25 February 2021</span>
-                    <span style={{ marginRight: 15, marginLeft: 15 }}>-</span>
-                    <span>26 February 2021</span>
-                    <DatePicker 
-                        className="date-picker" 
+
+                    <DatePicker
+                        className="date-picker"
+                        calendarClassNames="panel"
                         selectedStart={this.state.selectedCheckinDate}
                         selectedEnd={this.state.selectedCheckoutDate}
-                        onSelectStart={this.onSelectStart}
-                        onSelectEnd={this.onSelectEnd}
-                    />
+                        onRangeSelected={(start, end) => this.setState({ selectedCheckinDate: start, selectedCheckoutDate: end })}
+                    >
+                        <div className="dates__selection">
+                            <FAIcon icon={faCalendarAlt} />
+                            <span>{moment(this.state.selectedCheckinDate).format('D MMMM YYYY')}</span>
+                            <span style={{ marginRight: 15, marginLeft: 15 }}>-</span>
+                            <span>{moment(this.state.selectedCheckoutDate).format('D MMMM YYYY')}</span>
+                        </div>
+                    </DatePicker>
                 </div>
                 <div className="guests">
                     <FAIcon icon={faUserFriends} />
@@ -100,29 +105,40 @@ const Panel = styled.div`
         display: flex;
         align-items: center;
         padding: 0 0 0 15px;
-        cursor: pointer;
+        
         &:hover {
             span {
                 color: #503109;
             }
         }
-        > svg {
-            color: #FA9917;
-            margin-right: 20px;
-            position: relative;
-            top: -1px;
-            transition: left 100ms ease-in-out;
-        }
-        > span {
+        
+        &__selection {
             font-size: 16px;
             font-weight: 400;
             white-space: nowrap;
+            display: flex;
+            justify-content: space-evenly;
+            flex-grow: 1;
+            height: 40px;
+            align-items: center;
+            
+            > svg {
+                color: #FA9917;
+                margin-right: 20px;
+                position: relative;
+                top: -1px;
+                transition: left 100ms ease-in-out;
+            }
+            
         }
         .date-picker {
-            position: absolute;
-            bottom: 115%;
-            left: 30px;
+            .panel {
+                position: absolute;
+                bottom: 115%;
+                left: 30px;
+            }
         }
+        
     }
     .guests {
         grid-area: guests;
