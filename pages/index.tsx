@@ -8,7 +8,8 @@ export default class Home extends React.Component {
 
     return (
       <>
-        <Header />
+        <Header withBackground={false} />
+        <FirstScreen />
         <FirstScreen />
       </>
     );

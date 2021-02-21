@@ -61,7 +61,6 @@ class BookingModule extends Component<StateProps, {}> {
         return (
             <Panel>
                 <div className="dates">
-
                     <DatePicker
                         className="date-picker"
                         calendarClassNames="panel"
@@ -69,8 +68,9 @@ class BookingModule extends Component<StateProps, {}> {
                         selectedEnd={this.state.selectedCheckoutDate}
                         onRangeSelected={(start, end) => this.setState({ selectedCheckinDate: start, selectedCheckoutDate: end })}
                     >
+                        <FAIcon icon={faCalendarAlt} />
                         <div className="dates__selection">
-                            <FAIcon icon={faCalendarAlt} />
+
                             <span>{moment(this.state.selectedCheckinDate).format('D MMMM YYYY')}</span>
                             <span style={{ marginRight: 15, marginLeft: 15 }}>-</span>
                             <span>{moment(this.state.selectedCheckoutDate).format('D MMMM YYYY')}</span>
@@ -121,7 +121,12 @@ const Panel = styled.div`
             flex-grow: 1;
             height: 40px;
             align-items: center;
-            
+            cursor: pointer;
+        }
+        .date-picker {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
             > svg {
                 color: #FA9917;
                 margin-right: 20px;
@@ -129,9 +134,6 @@ const Panel = styled.div`
                 top: -1px;
                 transition: left 100ms ease-in-out;
             }
-            
-        }
-        .date-picker {
             .panel {
                 position: absolute;
                 bottom: 115%;
