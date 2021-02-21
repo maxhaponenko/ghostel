@@ -62,8 +62,7 @@ export default class DatePicker extends Component<OwnProps, State> {
 
     selectStart = (date: Date) => this.setState({ start: date })
     selectEnd = (date: Date) => this.setState({ end: date })
-
-    setNoneStage = () => this.setState({ stage: SelectionStage.None })
+    
     setStartStage = () => this.setState({ stage: SelectionStage.Start })
     setSelectedStage = () => this.setState({ stage: SelectionStage.Selected })
 
