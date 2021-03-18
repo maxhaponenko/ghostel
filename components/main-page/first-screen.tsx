@@ -51,6 +51,9 @@ const Section = styled.div`
         @media (max-width: 1999px) {
             font-size: 65px;
         }
+        @media (max-width: 399px) {
+            font-size: 40px;
+        }
     }
     .booking-module-container {
         width: 887px;

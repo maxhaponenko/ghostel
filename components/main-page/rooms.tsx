@@ -59,7 +59,6 @@ export default class SecondScreen extends Component {
 const Section = styled.div`
     position: relative;
     width: 100%;
-    height: 100vh;
     .container {
         height: 100%;
         position: relative;
@@ -75,13 +74,23 @@ const Section = styled.div`
     .rooms-container {
         display: flex;
         justify-content: space-between;
-        margin-left: -10px;
-        margin-right: -10px;
+        flex-wrap: wrap;
         
         > .grid-item {
             width: 25%;
             padding: 10px;
             height: 460px;
+            @media (max-width: 1199px) {
+                width: 50%;
+                padding: 20px 20px;
+                height: 480px;
+            }
+            @media (max-width: 675px) {
+                width: 100%;
+            }
+            @media (max-width: 399px) {
+                height: 400px;
+            }
             
             > .room-item {
                 position: relative;
@@ -90,7 +99,6 @@ const Section = styled.div`
                 display: flex;
                 flex-direction: column;
                 overflow: hidden;
-                
                 background-position: center;
                 background-size: cover;
                 background-repeat: no-repeat;
@@ -102,7 +110,6 @@ const Section = styled.div`
                 
                 &:hover {
                     transform: translate(0, -5px);
-                    
                 }
 
                 > .bottom-container {
@@ -110,7 +117,13 @@ const Section = styled.div`
                     position: relative;
                     margin-top: auto;
                     padding: 20px;
-                    padding-top: 130px;
+                    /* padding-top: 130px; */
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    @media (max-width: 399px) {
+                        padding: 15px;
+                    }
                     .room-name {
                         font-size: 22px;
                     }
@@ -121,6 +134,9 @@ const Section = styled.div`
                     .room-price {
                         font-size: 17px;
                         margin-top: 13px;
+                        @media (max-width: 399px) {
+                            font-size: 15px;
+                        }
                         b {
                             font-weight: 600;
                         }
@@ -131,28 +147,32 @@ const Section = styled.div`
                 }
             }
 
-            /* > .room-item {
-                display: flex;
-                flex-direction: column;
-                overflow: hidden;
-                
-            } */
-
             > .room-1 { 
                 background-image: url(${image}); 
-                > .bottom-container { background: linear-gradient(180deg, rgba(176,176,176,0) 0%, rgba(176,176,176,0.5) 50%, rgba(176,176,176,1) 100%); }
+                > .bottom-container { 
+                    background: linear-gradient(180deg, rgba(176,176,176,0) 0%, rgba(176,176,176,0.5) 50%, rgba(176,176,176,1) 100%); 
+                }
             }
             > .room-2 { 
                 background-image: url(${image1}); 
-                > .bottom-container { background: linear-gradient(180deg, rgba(176,176,176,0) 0%, rgba(176,176,176,0.5) 50%, rgba(176,176,176,1) 100%); }
+                > .bottom-container { 
+                    background: linear-gradient(180deg, rgba(47,26,9,0) 0%, rgba(47,26,9,0.5) 50%, rgba(47,26,9,1) 100%); 
+                    color: white;
+                }
             }
             > .room-3 { 
                 background-image: url(${image2}); 
-                > .bottom-container { background: linear-gradient(180deg, rgba(176,176,176,0) 0%, rgba(176,176,176,0.5) 50%, rgba(176,176,176,1) 100%); }
+                > .bottom-container { 
+                    background: linear-gradient(180deg, rgba(20,20,36,0) 0%, rgba(20,20,36,0.5) 50%, rgba(20,20,36,1) 100%); 
+                    color: white;
+                }
             }
             > .room-4 { 
                 background-image: url(${image3}); 
-                > .bottom-container { background: linear-gradient(180deg, rgba(176,176,176,0) 0%, rgba(176,176,176,0.5) 50%, rgba(176,176,176,1) 100%); }
+                > .bottom-container { 
+                    background: linear-gradient(180deg, rgba(88,67,42,0) 0%, rgba(88,67,42,0.5) 50%, rgba(88,67,42,1) 100%); 
+                    color: white;
+                }
             }
         }
     }
