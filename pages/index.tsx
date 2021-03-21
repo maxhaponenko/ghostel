@@ -4,6 +4,7 @@ import Header from 'components/header'
 import FirstScreen from 'components/main-page/first-screen'
 import SecondScreen from 'components/main-page/rooms'
 import Rules from 'components/main-page/rules'
+import OurStory from 'components/main-page/our-story'
 export default class Home extends React.Component {
 
   render() {
@@ -14,6 +15,7 @@ export default class Home extends React.Component {
         <FirstScreen />
         <SecondScreen />
         <Rules />
+        <OurStory />
       </>
     );
   }

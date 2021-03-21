@@ -176,12 +176,4 @@ const Section = styled.div`
             }
         }
     }
-    
-    .booking-module-container {
-        width: 887px;
-        position: absolute;
-        bottom: 100px;
-        right: 10px;
-        padding-right: 20px;
-    }
 `

@@ -7,6 +7,7 @@ class OwnProps {
     type: 'default' | 'outline';
     color: 'primary' | 'white' | 'grey' | 'danger';
     size: 'sm' | 'md' | 'lg' | 'xl'
+    onClick: () => any;
     disabled?: boolean;
     shadow?: boolean;
     isLoading?: boolean;
@@ -28,7 +29,6 @@ export default class Button extends Component<OwnProps> {
                 {...otherProps}
             >
                 <FontAwesomeIcon icon={faSpinner} />
-                {/* <i className="fas fa-spinner"></i> */}
                 {this.props.children}
             </Btn>
         )
@@ -81,9 +81,9 @@ const Btn: any = styled.button`
     font-weight: 300;
     padding: ${(props: any) => {
         if (props.size === 'sm') return '0.25rem 0.6rem'
-        if (props.size === 'md') return '0.2rem 0.4rem'
-        if (props.size === 'lg') return '0.2rem 0.4rem'
-        if (props.size === 'xl') return '0.2rem 0.4rem'
+        if (props.size === 'md') return '0.3rem 0.7rem'
+        if (props.size === 'lg') return '0.3rem 0.7rem'
+        if (props.size === 'xl') return '0.4rem 0.9rem'
     }};
     box-shadow: ${(props: any) => {
         if (props.shadow) return '0px 1px 1px rgba(0,0,0,0.5)';
@@ -110,7 +110,7 @@ const Btn: any = styled.button`
         if (!props.isLoading) return 'default'
     }};
 
-    svg {
+    .fa-spinner {
         position: absolute;
         display: ${(props: any) => props.isLoading ? 'block' : 'none'};
         opacity: ${(props: any) => props.isLoading ? 1 : 0};
