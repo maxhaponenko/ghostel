@@ -108,7 +108,7 @@ export default function Photos() {
                     <div className="grid-photos">
                         <div className="photos-container">
                             {springs.map((item, index) => (
-                                <animated.div className="photo" style={{ ...item, backgroundImage: `url(${images[index]})` }}></animated.div>
+                                <animated.div key={index} className="photo" style={{ ...item, backgroundImage: `url(${images[index]})` }}></animated.div>
                             ))}
                         </div>
                     </div>
@@ -147,21 +147,6 @@ export default function Photos() {
         </Section>
     )
 }
-
-const PhotoContainer = styled.div`
-    position: relative;
-    min-height: 500px;
-    margin-bottom: 50px;
-    padding: 10px 50px;
-    
-    .buttons {
-        position: relative;
-        > button { 
-            margin-left: auto;
-        }
-    }
-`
-
 
 const Section = styled.div`
     position: relative;
