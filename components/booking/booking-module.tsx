@@ -82,7 +82,7 @@ class BookingModule extends Component<StateProps, {}> {
                     <span>2 guests</span>
                 </div>
                 <div className="button">
-                    <Button color="primary" size="xl" type="default">Check availability</Button>
+                    <Button color="primary" size="xl" type="default" onClick={() => {}}>Check availability</Button>
                 </div>
             </Panel>
         )
