@@ -11,6 +11,7 @@ class OwnProps {
     disabled?: boolean;
     shadow?: boolean;
     isLoading?: boolean;
+    [key: string]: any;
 }
 
 export default class Button extends Component<OwnProps> {
@@ -90,14 +91,18 @@ const Btn: any = styled.button`
         return 'none'
     }};
     opacity: ${(props: any) => {
-        if (props.disabled) return '0.7'
+        if (props.disabled) return '0.5'
     }};
     backdrop-filter: ${(props: any) => {
         if (props.disabled) return 'greyscale(0.8)'
     }};
+    
     border-radius: 30px;
     cursor: pointer;
     transition: all 100ms ease-in-out;
+    &:disabled {
+        pointer-events: none;
+    } 
     &:hover {
         filter: brightness(105%);
     }
