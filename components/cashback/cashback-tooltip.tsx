@@ -47,7 +47,7 @@ export class CachbackTooltip extends Component<StateProps & OwnProps> {
             return (
                 <div className="step1">
                     <span>Cashback for groups</span>
-                    <Button type='outline' size="sm" color="primary" isLoading={true} >See more</Button>
+                    <Button type='outline' size="sm" color="primary" isLoading={true} onClick={() => {}} >See more</Button>
                 </div>
             )
         }

@@ -20,8 +20,8 @@ export default class Rules extends Component {
                         <span className="time">12:00</span>
                     </div>
                 </div>
-                <Button type="default" size="lg" shadow color="white"><FAIcon icon={faConciergeBell} />Accomodation Rools</Button>
-                <Button type="default" size="lg" shadow color="white"><FAIcon icon={faCreditCard} />Payment rools</Button>
+                <Button type="default" size="lg" shadow color="white" onClick={() => {}}><FAIcon icon={faConciergeBell} />Accomodation Rools</Button>
+                <Button type="default" size="lg" shadow color="white" onClick={() => {}}><FAIcon icon={faCreditCard} />Payment rools</Button>
             </Section>
         )
     }
