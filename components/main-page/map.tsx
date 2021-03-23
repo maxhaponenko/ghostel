@@ -53,7 +53,7 @@ function Map() {
             )}
             <div className="map-contacts-card">
                 <div className="image"></div>
-                <div>
+                <div className="contacts">
                     <p>Lviv, Kopernika str. 9/10-B <span>[v]</span><br />3rd floor</p>
                     <p><a href="tel:+380985520299">+38098 55 202 99</a><br /><a href="mailto:ghostelh@gmail.com">ghostelh@gmail.com</a></p>
                     <div className="social">
@@ -129,7 +129,7 @@ const Section = styled.div`
                 height: 200px;
             }
         }
-        > div {
+        .contacts {
             padding: 25px;
             display: flex;
             flex-direction: column;
@@ -146,6 +146,9 @@ const Section = styled.div`
                 @media (max-width: 450px) {
                     font-size: 14px;
                     margin-bottom: 0;
+                }
+                span {
+                    opacity: 0.6;
                 }
                 a {
                     color: black;
