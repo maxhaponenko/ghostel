@@ -43,10 +43,10 @@ const getAnimation = (items) => (index) => {
     }
     return {
         from: {
-            transform: 'translate(-300%, 0%) rotate(-45deg)',
+            transform: 'translate(-500%, 0%) rotate(-45deg)',
         },
         to: {
-            transform: isVisible ? `translate(${translateMap[index]}) rotate(${rotationMap[index]})` : 'translate(-300%, 0%) rotate(-45deg)',
+            transform: isVisible ? `translate(${translateMap[index]}) rotate(${rotationMap[index]})` : 'translate(-500%, 0%) rotate(-45deg)',
         },
         delay: index * 50,
         
