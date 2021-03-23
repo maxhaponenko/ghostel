@@ -11,7 +11,7 @@ export default class SecondScreen extends Component {
         return (
             <Section>
                 <div className="container">
-                    <h3>ROOMS</h3>
+                    <h2>ROOMS</h2>
                     <div className="rooms-container">
                         <div className="grid-item">
                             <div className="room-item room-1">
@@ -65,7 +65,7 @@ const Section = styled.div`
         padding-top: 100px;
         padding-bottom: 140px;
     }
-    h3 {
+    h2 {
         font-size: 35px;
         text-align: center;
         font-weight: normal;

@@ -102,7 +102,7 @@ export default function Photos() {
         <Section >
             <div className="container">
 
-                <h3>OUR STORY</h3>
+                <h2>OUR STORY</h2>
                 <div className="our-story-container">
 
                     <div className="grid-photos">
@@ -157,7 +157,7 @@ const Section = styled.div`
         padding-top: 100px;
         padding-bottom: 140px;
     }
-    h3 {
+    h2 {
         font-size: 35px;
         text-align: center;
         font-weight: normal;
