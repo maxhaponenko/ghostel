@@ -7,6 +7,7 @@ import Rules from 'components/main-page/rules'
 import OurStory from 'components/main-page/our-story'
 import Map from 'components/main-page/map'
 import SeoText from 'components/main-page/seo-text'
+import Footer from 'components/footer'
 
 export default class Home extends React.Component {
 
@@ -21,6 +22,7 @@ export default class Home extends React.Component {
         <OurStory />
         <Map />
         <SeoText />
+        <Footer />
       </>
     );
   }
