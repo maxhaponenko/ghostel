@@ -145,24 +145,12 @@ const Section = styled.div`
         color: #828282;
         border-top: 1px solid rgba(218, 218, 218, 0.6);
         padding: 25px 10px;
-        @media (max-width: 400px) {
-            flex-direction: column;
-            a, p {
-                margin-bottom: 10px;
-            }
-            span {
-                display: none;
-            }
-        }
+        
         a, p {
             color: #828282;
             text-decoration: none;
             transition: all 100ms ease-in-out;
-            @media (max-width: 550px) {
-                /* width: min-content; */
-                display: block;
-                text-align: center;
-            }
+            font-size: 13px;
         }
         p, span {
             cursor: default;
@@ -174,6 +162,25 @@ const Section = styled.div`
             margin: 0 9px;
             position: relative;
             top: -1px;
+        }
+
+        @media (max-width: 550px) {
+            a, p {
+                width: min-content;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 400px) {
+            flex-direction: column;
+            a, p {
+                margin-bottom: 10px;
+                width: auto;
+            }
+            span {
+                display: none;
+            }
         }
     }
 `
