@@ -55,7 +55,7 @@ function Map() {
                 <div className="image"></div>
                 <div>
                     <p>Lviv, Kopernika str. 9/10-B <span>[v]</span><br />3rd floor</p>
-                    <p><a href="tel:+380985520299">+38098 55 202 99</a><br /><a href="email:ghostelh@gmail.com">ghostelh@gmail.com</a></p>
+                    <p><a href="tel:+380985520299">+38098 55 202 99</a><br /><a href="mailto:ghostelh@gmail.com">ghostelh@gmail.com</a></p>
                     <div className="social">
                         <div className="item" onClick={() => window.open('https://www.facebook.com/ghostellviv', '_blank')}><img src={facebook}></img></div>
                         <div className="item" onClick={() => window.open('https://www.instagram.com/ghostel.lviv/', '_blank')}><img src={instagram}></img></div>
