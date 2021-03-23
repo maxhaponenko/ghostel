@@ -41,11 +41,11 @@ function Map() {
                     <Marker position={hostelCoordinates} title="GHOSTeL - Medieval Hostel" />
                 </GoogleMap>
             )}
-            <div className="contacts-card">
+            <div className="map-contacts-card">
                 <img src={image}></img>
                 <div>
-                    <p>Lviv, Kopernika str. 9/10-B <span>[v]</span><br/>3rd floor</p>
-                    <p>+38098 55 202 99<br/>ghostelh@gmail.com</p>
+                    <p>Lviv, Kopernika str. 9/10-B <span>[v]</span><br />3rd floor</p>
+                    <p>+38098 55 202 99<br />ghostelh@gmail.com</p>
                 </div>
             </div>
         </Section>
@@ -57,17 +57,22 @@ const Section = styled.div`
     height: 740px;
     box-shadow: inset 0px 2px 4px rgba(0,0,0,0.5); 
     position: relative;
-    .contacts-card {
+
+
+    .map-contacts-card {
         height: auto;
         width: 311px;
         padding: 5px;
         position: absolute;
         top: 50%;
-        right: 50px;
+        right: calc((100vw - 1400px) / 2);
         transform: translate(0, -50%);
         background-color: white;
         border-radius: 15px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        @media (max-width: 1420px) {
+            right: 20px;
+        }
         img {
             width: 100%;
             height: auto;
