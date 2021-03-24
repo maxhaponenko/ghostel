@@ -61,5 +61,8 @@ const Section = styled.div`
         bottom: 100px;
         right: 10px;
         padding-right: 20px;
+        @media (max-width: 960px) {
+            width: auto;
+        }
     }
 `

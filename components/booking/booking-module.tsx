@@ -100,11 +100,23 @@ const Panel = styled.div`
     grid-template-areas: "dates guests button";
     grid-template-columns: 2fr 1fr 245px;
     gap: 15px;
+
+    @media (max-width: 960px) {
+        grid-template-areas: "button";
+        grid-template-columns: 245px;
+        width: 253px;
+        padding: 4px;
+    }
+
     .dates {
         grid-area: dates;
         display: flex;
         align-items: center;
         padding: 0 0 0 15px;
+
+        @media (max-width: 960px) {
+            display: none;
+        }
         
         &:hover {
             span {
@@ -148,6 +160,11 @@ const Panel = styled.div`
         align-items: center;
         padding: 0 0 0 15px;
         cursor: pointer;
+
+        @media (max-width: 960px) {
+            display: none;
+        }
+
         &:hover {
             span {
                 color: #503109;
