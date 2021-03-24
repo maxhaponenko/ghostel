@@ -1,5 +1,6 @@
 import React, { RefObject, MouseEvent } from 'react';
 import styled, { css } from 'styled-components';
+import { animated, useSpring } from 'react-spring'
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import BgPattern from 'public/images/bg-1.jpg'
@@ -8,20 +9,39 @@ import LogoPng from 'public/images/logo.png';
 import DiscountBadge from 'components/cashback/cashback.entry';
 import LanguageToggler from 'components/language-toggler';
 
+
+class OwnProps {
+    transparentMode?: boolean;
+}
 class State {
     isOpen: boolean;
-}
-class OwnProps {
-    withBackground?: boolean;
+    isTransparent: boolean;
 }
 
 export default class Header extends React.PureComponent<OwnProps, State> {
 
     state = {
         isOpen: false,
+        isTransparent: this.props.transparentMode,
     }
 
     mobileMenu: RefObject<any> = React.createRef();
+
+    componentDidMount() {
+        this.scrollPositionHandler()
+        document.addEventListener('scroll', this.scrollPositionHandlerBinded)
+    }
+    componentWillUnmount() {
+        document.removeEventListener('scroll', this.scrollPositionHandlerBinded)
+    }
+    scrollPositionHandler = () => {
+        if (window.scrollY > 20 && this.props.transparentMode) {
+            this.setState({ isTransparent: false })
+        } else if (window.scrollY <= 20 && this.props.transparentMode) {
+            this.setState({ isTransparent: true })
+        }
+    }
+    scrollPositionHandlerBinded = this.scrollPositionHandler.bind(this)
 
     toggle = (e: MouseEvent) => {
         e.stopPropagation()
@@ -44,10 +64,9 @@ export default class Header extends React.PureComponent<OwnProps, State> {
     }
     handleOutsideClickBinded = this.handleOutsideClick.bind(this)
 
-
     render() {
         return (
-            <Panel withBackground={this.props.withBackground} isOpen={this.state.isOpen}>
+            <Panel transparent={this.state.isTransparent} isOpen={this.state.isOpen} >
                 <div className="container">
                     <div className="logo"><img src={LogoPng} /></div>
                     <div className="menu-container" ref={this.mobileMenu}>
@@ -60,7 +79,7 @@ export default class Header extends React.PureComponent<OwnProps, State> {
                             </ul>
                         </div>
                         <div className="discount">
-                            <DiscountBadge />
+                            <DiscountBadge smallShadow={this.state.isTransparent ? false : true} />
                         </div>
                         <div className="language">
                             <LanguageToggler />
@@ -95,10 +114,10 @@ const Panel = styled.div`
         justify-content: center;
         align-items: center;
         @media (max-width: 900px) {
-            height: 105px; 
+            height: 90px; 
         }
         @media (max-width: 450px) {
-            height: 95px;
+            height: 90px;
             width: 110px;
         }
         img {
@@ -109,8 +128,8 @@ const Panel = styled.div`
             @media (max-width: 1100px) {
                 height: 75px; 
             }
-            @media (max-width: 450px) {
-                height: 60px;
+            @media (max-width: 900px) {
+                height: 60px; 
             }
             &:hover {
                 transform: scale(1.02);
@@ -123,10 +142,10 @@ const Panel = styled.div`
         @media (max-width: 900px) {
             position: fixed;
             right: 40px;
-            top: 35px;
+            top: 22px;
             margin-left: auto;
             display: flex;
-            background-color: white;
+            background-image: url(${BgPattern});
             border-radius: 100%;
             width: 45px;
             max-width: 45px;
@@ -136,37 +155,46 @@ const Panel = styled.div`
             align-items: center;
             box-shadow: 0px 1px 1px rgba(0,0,0,0.5);
             cursor: pointer;
+            transition: transform 100ms ease-in-out;
             > * {
-                font-size: 21px;
+                font-size: 19px;
+                color: #666666;
             }
+            &:hover {
+                transform: scale(1.05);
+            }
+            ${props => !props.transparent && css`
+                background-color: transparent;
+                box-shadow: none;
+            `}
         }
         @media (max-width: 450px) {
-            top: 25px;
+            top: 20px;
             right: 20px;
         }
     }
     .menu-container {
         display: flex;
         flex-grow: 1;
-        transition: all 200ms ease-in-out;
         @media (max-width: 900px) {
             position: fixed;
             display: grid;
             padding: 30px 20px 20px;
-            /* backdrop-filter: blur(1px); */
             border-radius: 20px;
             top: 50%;
-            background-color: rgba(0,0,0,0.7);
+            background-image: url(${BgPattern});
             border: 1px solid rgba(255,255,255,0.3);
-            left: ${props => props.isOpen ? '50%' : '150%'};
-            transform: translate(-50%, -50%);
-            gap: 10px;
+            left: 50%;
+            transform: ${props => props.isOpen ? 'translate(-50%, -50%)' : 'translate(250%, -50%)'};
+            transition: transform 150ms cubic-bezier(.66,-0.34,.35,1.35);
+            gap: 0px;
             grid-template-areas:  
             "nav" 
             "discount"
             "languages";
             grid-template-rows: auto auto;
             grud-temaplte-columns: 1fr 1fr;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0px 250px rgba(0,0,0,0.5);
             .menu {
                 grid-area: nav;
                 ul {
@@ -176,6 +204,17 @@ const Panel = styled.div`
                     li {
                         text-align: center;
                         margin: 20px 0;
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                        a {
+                            color: #666666;
+                            text-shadow: none;
+                            font-weight: 700;
+                            &:hover {
+                                color: #414141;
+                            }
+                        }
                     }
                 }
             }
@@ -185,6 +224,9 @@ const Panel = styled.div`
             .language {
                 grid-area: languages;
                 margin: 0 auto;
+                > div {
+                    height: 125px !important;
+                }
             }
         }
     }
@@ -224,7 +266,7 @@ const Panel = styled.div`
         margin-left: 20px;
     }
 
-    ${props => props.withBackground && css`
+    ${props => !props.transparent && css`
         background: none;
         background-color: white;
         height: auto;
@@ -233,21 +275,47 @@ const Panel = styled.div`
         background-repeat: repeat;
         background-size: 30%;
         .logo {
+            height: 90px;
             img {
                 height: 60px;
             }
         }
-        .menu {
-            ul {
-                li {
-                    a {
-                        color: #666666;
-                        text-shadow: none;
-                        font-weight: 700;
-                        &:hover {
-                            color: #414141;
+        
+        .menu-container {
+            .menu {
+                ul {
+                    li {
+                        a {
+                            color: #666666;
+                            text-shadow: none;
+                            font-weight: 700;
+                            &:hover {
+                                color: #414141;
+                            }
                         }
                     }
+                }
+            }
+            .discount {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                @media (max-width: 900px) {
+                    display: none;
+                }
+                img {
+                    position: relative;
+                }
+                > div > div {
+                    height: 90px;
+                }
+            }
+            .language {
+                > div {
+                    height: 90px;
+                }
+                .second-language, .third-language {
+                    box-shadow: 0 0px 3px rgb(0 0 0 / 7w0%);
                 }
             }
         }

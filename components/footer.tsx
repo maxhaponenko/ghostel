@@ -47,6 +47,8 @@ const Section = styled.div`
     width: 100%;
     height: auto;
     background-image: url(${background});
+    background-size: 30%;
+    background-repeat: repeat;
     .content-block {
         padding: 70px 20px;
         display: flex;

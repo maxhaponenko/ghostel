@@ -15,7 +15,7 @@ export default class Home extends React.Component {
 
     return (
       <>
-        <Header withBackground={false} />
+        <Header transparentMode />
         <FirstScreen />
         <SecondScreen />
         <Rules />

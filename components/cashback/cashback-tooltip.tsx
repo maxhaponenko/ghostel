@@ -55,7 +55,14 @@ export class CachbackTooltip extends Component<StateProps & OwnProps> {
 
     render() {
         return (
-            <Tooltip ref={this.tooltipRef} isActive={this.state.isActive} onClick={() => this.toggleTooltip()}>
+            <Tooltip 
+                ref={this.tooltipRef} 
+                isActive={this.state.isActive} 
+                onClick={(e) => {
+                    e.stopPropagation()
+                    this.toggleTooltip()
+                }}
+            >
                 {this.props.children}
                 <div className="tooltip-panel">
                     {this.renderCurrentStep()}

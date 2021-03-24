@@ -1,15 +1,20 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import discountBadge from 'public/images/icons/discount-icon.png';
+import discountBadgeSmallShadow from 'public/images/icons/discount-icon-small-shadow.png';
 import Tooltip from './cashback-tooltip';
 import styled from 'styled-components'
 
-class DiscountBadge extends Component {
+class OwnProps {
+    smallShadow: boolean
+}
+
+class DiscountBadge extends Component<OwnProps, any> {
     render() {
         return (
             <Tooltip>
                 <Badge>
-                    <img src={discountBadge} />
+                    <img src={this.props.smallShadow ? discountBadgeSmallShadow : discountBadge} />
                 </Badge>
             </Tooltip>
         )
