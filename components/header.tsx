@@ -1,6 +1,5 @@
 import React, { RefObject, MouseEvent } from 'react';
 import styled, { css } from 'styled-components';
-import { animated, useSpring } from 'react-spring'
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import BgPattern from 'public/images/bg-1.jpg'
