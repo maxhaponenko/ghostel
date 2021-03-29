@@ -77,6 +77,7 @@ const Section = styled.div`
         flex-wrap: wrap;
         
         > .grid-item {
+            
             width: 25%;
             padding: 10px;
             height: 460px;

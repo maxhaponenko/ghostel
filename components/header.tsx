@@ -1,4 +1,4 @@
-import React, { RefObject, MouseEvent } from 'react';
+import React, { RefObject, MouseEvent, Component, useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,7 @@ import Link from 'next/link'
 import LogoPng from 'public/images/logo.png';
 import DiscountBadge from 'components/cashback/cashback.entry';
 import LanguageToggler from 'components/language-toggler';
+import { animated, useSpring, config } from 'react-spring'
 
 
 class OwnProps {
@@ -49,13 +50,13 @@ export default class Header extends React.PureComponent<OwnProps, State> {
                 window.removeEventListener('click', this.handleOutsideClickBinded)
             })
         } else {
-            this.setState({ isOpen: true}, () => {
+            this.setState({ isOpen: true }, () => {
                 window.addEventListener('click', this.handleOutsideClickBinded)
             })
         }
     }
     handleOutsideClick = (e: MouseEvent) => {
-        if (this.mobileMenu && !this.mobileMenu.current.contains(e.target)) {
+        if (this.mobileMenu.current && !this.mobileMenu.current.contains(e.target)) {
             this.setState({ isOpen: false }, () => {
                 window.removeEventListener('click', this.handleOutsideClickBinded)
             })
@@ -65,25 +66,27 @@ export default class Header extends React.PureComponent<OwnProps, State> {
 
     render() {
         return (
-            <Panel transparent={this.state.isTransparent} isOpen={this.state.isOpen} >
+            <Panel transparent={this.state.isTransparent} >
                 <div className="container">
                     <div className="logo"><img src={LogoPng} /></div>
-                    <div className="menu-container" ref={this.mobileMenu}>
-                        <div className="menu">
-                            <ul>
-                                <li><Link href="/">RULES</Link></li>
-                                <li><Link href="/">FACILITIES</Link></li>
-                                <li><Link href="/">ROOMS</Link></li>
-                                <li><Link href="/">CONTACTS</Link></li>
-                            </ul>
+                    <AnimatedMenu isOpen={this.state.isOpen}>
+                        <div className="menu-container" ref={this.mobileMenu}>
+                            <div className="menu">
+                                <ul>
+                                    <li><Link href="/">RULES</Link></li>
+                                    <li><Link href="/">FACILITIES</Link></li>
+                                    <li><Link href="/">ROOMS</Link></li>
+                                    <li><Link href="/">CONTACTS</Link></li>
+                                </ul>
+                            </div>
+                            <div className="discount">
+                                <DiscountBadge smallShadow={this.state.isTransparent ? false : true} />
+                            </div>
+                            <div className="language">
+                                <LanguageToggler />
+                            </div>
                         </div>
-                        <div className="discount">
-                            <DiscountBadge smallShadow={this.state.isTransparent ? false : true} />
-                        </div>
-                        <div className="language">
-                            <LanguageToggler />
-                        </div>
-                    </div>
+                    </AnimatedMenu>
                     <div className="mobile-nav-btn" onClick={(e) => this.toggle(e)}>
                         <FAIcon icon={this.state.isOpen ? faTimes : faBars} />
                     </div>
@@ -106,7 +109,6 @@ const Panel = styled.div`
         align-items: center;
     }
     .logo {
-        /* padding: 19px 0; */
         height: 115px; 
         width: 165px;
         display: flex;
@@ -184,8 +186,7 @@ const Panel = styled.div`
             background-image: url(${BgPattern});
             border: 1px solid rgba(255,255,255,0.3);
             left: 50%;
-            transform: ${props => props.isOpen ? 'translate(-50%, -50%)' : 'translate(250%, -50%)'};
-            transition: transform 150ms cubic-bezier(.66,-0.34,.35,1.35);
+            transform: translate(-50%, -50%);
             gap: 0px;
             grid-template-areas:  
             "nav" 
@@ -319,5 +320,70 @@ const Panel = styled.div`
             }
         }
     `}
+
+`
+
+
+
+const AnimatedMenu = ({ isOpen, children }) => {
+    const [isMobileMode, setIsMobileMode] = useState(false)
+    
+    const handleResize = useCallback(
+        () => {
+            const windowWidth = window.innerWidth
+            if (windowWidth <= 900 && !isMobileMode) {
+                setIsMobileMode(true)
+            } else if (windowWidth > 900 && isMobileMode) {
+                setIsMobileMode(false)
+            }
+        },
+        [isMobileMode]
+    )
+    useEffect(() => {
+        handleResize()
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    })
+    const spring = useSpring({
+        from: { transform: isOpen ? 'translate(0%, 0%)' : 'translate(100%, 0%)' },
+        to: { transform: isOpen ? 'translate(0%, 0%)' : 'translate(100%, 0$)' },
+        config: config.stiff,
+    })
+
+    return (
+        <Animated style={isMobileMode ? spring : {}} isMobileMode={isMobileMode} isOpen={isOpen}>
+            {children}
+        </Animated>
+    )
+}
+const Animated = styled(animated.div)`
+    display: flex;
+    flex-grow: 1;
+    will-change: transform;
+
+    ${props => {
+        console.log(props)
+        if (props.isMobileMode) {
+            return css`
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                transform: translate(0%, 0%);
+            `
+        } else {
+            return css`
+                position: relative;
+                top: unset;
+                left: unset;
+                width: unset;
+                height: unset;
+                transform: translate(0%, 0%);
+            `
+        }
+    }}
 
 `
