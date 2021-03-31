@@ -1,4 +1,4 @@
-import React, { RefObject, MouseEvent, Component, useCallback, useEffect, useState } from 'react';
+import React, { RefObject, MouseEvent } from 'react';
 import styled, { css } from 'styled-components';
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -7,18 +7,22 @@ import Link from 'next/link'
 import LogoPng from 'public/images/logo.png';
 import DiscountBadge from 'components/cashback/cashback.entry';
 import LanguageToggler from 'components/language-toggler';
-import { animated, useSpring, config } from 'react-spring'
+import HeaderAnimation from './header-animation'
+import { withRouter, NextRouter } from 'next/router'
+
 
 
 class OwnProps {
     transparentMode?: boolean;
+    router: NextRouter
 }
 class State {
     isOpen: boolean;
     isTransparent: boolean;
 }
 
-export default class Header extends React.PureComponent<OwnProps, State> {
+
+class Header extends React.PureComponent<OwnProps, State> {
 
     state = {
         isOpen: false,
@@ -65,16 +69,19 @@ export default class Header extends React.PureComponent<OwnProps, State> {
     handleOutsideClickBinded = this.handleOutsideClick.bind(this)
 
     render() {
+
+        const { isOpen } = this.state
+
         return (
             <Panel transparent={this.state.isTransparent} >
                 <div className="container">
-                    <div className="logo"><img src={LogoPng} /></div>
-                    <AnimatedMenu isOpen={this.state.isOpen}>
+                    <div className="logo" onClick={() => this.props.router.push('/')}><img src={LogoPng} /></div>
+                    <HeaderAnimation isOpen={isOpen}>
                         <div className="menu-container" ref={this.mobileMenu}>
                             <div className="menu">
                                 <ul>
                                     <li><Link href="/">RULES</Link></li>
-                                    <li><Link href="/">FACILITIES</Link></li>
+                                    <li><Link href="/jilye_vo_lvove">FACILITIES</Link></li>
                                     <li><Link href="/">ROOMS</Link></li>
                                     <li><Link href="/">CONTACTS</Link></li>
                                 </ul>
@@ -86,7 +93,7 @@ export default class Header extends React.PureComponent<OwnProps, State> {
                                 <LanguageToggler />
                             </div>
                         </div>
-                    </AnimatedMenu>
+                    </HeaderAnimation>
                     <div className="mobile-nav-btn" onClick={(e) => this.toggle(e)}>
                         <FAIcon icon={this.state.isOpen ? faTimes : faBars} />
                     </div>
@@ -323,67 +330,4 @@ const Panel = styled.div`
 
 `
 
-
-
-const AnimatedMenu = ({ isOpen, children }) => {
-    const [isMobileMode, setIsMobileMode] = useState(false)
-    
-    const handleResize = useCallback(
-        () => {
-            const windowWidth = window.innerWidth
-            if (windowWidth <= 900 && !isMobileMode) {
-                setIsMobileMode(true)
-            } else if (windowWidth > 900 && isMobileMode) {
-                setIsMobileMode(false)
-            }
-        },
-        [isMobileMode]
-    )
-    useEffect(() => {
-        handleResize()
-        window.addEventListener('resize', handleResize)
-        return () => {
-            window.removeEventListener('resize', handleResize)
-        }
-    })
-    const spring = useSpring({
-        from: { transform: isOpen ? 'translate(0%, 0%)' : 'translate(100%, 0%)' },
-        to: { transform: isOpen ? 'translate(0%, 0%)' : 'translate(100%, 0$)' },
-        config: config.stiff,
-    })
-
-    return (
-        <Animated style={isMobileMode ? spring : {}} isMobileMode={isMobileMode} isOpen={isOpen}>
-            {children}
-        </Animated>
-    )
-}
-const Animated = styled(animated.div)`
-    display: flex;
-    flex-grow: 1;
-    will-change: transform;
-
-    ${props => {
-        console.log(props)
-        if (props.isMobileMode) {
-            return css`
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                transform: translate(0%, 0%);
-            `
-        } else {
-            return css`
-                position: relative;
-                top: unset;
-                left: unset;
-                width: unset;
-                height: unset;
-                transform: translate(0%, 0%);
-            `
-        }
-    }}
-
-`
+export default withRouter(Header)

@@ -1,29 +1,25 @@
 import React from 'react';
-import styled from 'styled-components'
-import Header from 'components/header'
+import DefaultLayout from 'components/default-layout'
 import FirstScreen from 'components/main-page/first-screen'
 import SecondScreen from 'components/main-page/rooms'
 import Rules from 'components/main-page/rules'
 import OurStory from 'components/main-page/our-story'
 import Map from 'components/main-page/map'
 import SeoText from 'components/main-page/seo-text'
-import Footer from 'components/footer'
 
 export default class Home extends React.Component {
 
   render() {
 
     return (
-      <>
-        <Header transparentMode />
+      <DefaultLayout transparentHeader>
         <FirstScreen />
         <SecondScreen />
         <Rules />
         <OurStory />
         <Map />
         <SeoText />
-        <Footer />
-      </>
+      </DefaultLayout>
     );
   }
 }
