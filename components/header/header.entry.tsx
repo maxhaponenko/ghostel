@@ -8,13 +8,14 @@ import LogoPng from 'public/images/logo.png';
 import DiscountBadge from 'components/cashback/cashback.entry';
 import LanguageToggler from 'components/language-toggler';
 import HeaderAnimation from './header-animation'
-import { withRouter, NextRouter } from 'next/router'
+import { NextRouter, useRouter } from 'next/router'
 
 
 
 class OwnProps {
     transparentMode?: boolean;
-    router: NextRouter
+    router: NextRouter;
+    [key: string]: any
 }
 class State {
     isOpen: boolean;
@@ -30,6 +31,7 @@ class Header extends React.PureComponent<OwnProps, State> {
     }
 
     mobileMenu: RefObject<any> = React.createRef();
+    header: RefObject<any> = React.createRef();
 
     componentDidMount() {
         this.scrollPositionHandler()
@@ -73,7 +75,7 @@ class Header extends React.PureComponent<OwnProps, State> {
         const { isOpen } = this.state
 
         return (
-            <Panel transparent={this.state.isTransparent} >
+            <Panel transparent={this.state.isTransparent} ref={this.header} >
                 <div className="container">
                     <div className="logo" onClick={() => this.props.router.push('/')}><img src={LogoPng} /></div>
                     <HeaderAnimation isOpen={isOpen}>
@@ -327,7 +329,16 @@ const Panel = styled.div`
             }
         }
     `}
-
 `
 
-export default withRouter(Header)
+const withRouter = () => {
+    return React.forwardRef((props: OwnProps, ref) => {
+
+        const router = useRouter()
+
+        return <Header ref={ref as any} router={router} {...props} />
+    })
+}
+
+
+export default withRouter()
