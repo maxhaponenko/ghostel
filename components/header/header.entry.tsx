@@ -84,7 +84,7 @@ class Header extends React.PureComponent<OwnProps, State> {
                                 <ul>
                                     <li><Link href="/">RULES</Link></li>
                                     <li><Link href="/jilye_vo_lvove">FACILITIES</Link></li>
-                                    <li><Link href="/">ROOMS</Link></li>
+                                    <li><Link href="/rooms/lords-chambers">ROOMS</Link></li>
                                     <li><Link href="/">CONTACTS</Link></li>
                                 </ul>
                             </div>

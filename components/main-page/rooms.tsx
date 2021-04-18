@@ -1,59 +1,59 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
 import image from 'public/images/image_5.jpg'
 import image1 from 'public/images/image_7.jpg';
 import image2 from 'public/images/image_4.jpg';
 import image3 from 'public/images/image_6.jpg';
 
-export default class SecondScreen extends Component {
-    render() {
-        return (
-            <Section>
-                <div className="container">
-                    <h2>ROOMS</h2>
-                    <div className="rooms-container">
-                        <div className="grid-item">
-                            <div className="room-item room-1">
-                                <div className="bottom-container">
-                                    <div className="room-name">Lord`s Chambers</div>
-                                    <div className="room-guests">2 guests</div>
-                                    <div className="room-price">from <b>500 UAH</b> for <b>2 guests</b></div>
-                                </div>
+export default function SecondScreen() {
+
+    const router = useRouter()
+
+    return (
+        <Section>
+            <div className="container">
+                <h2>ROOMS</h2>
+                <div className="rooms-container">
+                    <div className="grid-item">
+                        <div className="room-item room-1">
+                            <div className="bottom-container">
+                                <div className="room-name">Lord`s Chambers</div>
+                                <div className="room-guests">2 guests</div>
+                                <div className="room-price">from <b>500 UAH</b> for <b>2 guests</b></div>
                             </div>
                         </div>
-                        <div className="grid-item">
-                            <div className="room-item room-2">
-                                <div className="bottom-container">
-                                    <div className="room-name">Cell Monks</div>
-                                    <div className="room-guests">4 guests</div>
-                                    <div className="room-price orange">from <b>250 UAH</b> for <b>1 guest</b></div>
-                                </div>
+                    </div>
+                    <div className="grid-item">
+                        <div className="room-item room-2" onClick={() => router.push("/rooms/cell-monks")}>
+                            <div className="bottom-container">
+                                <div className="room-name">Cell Monks</div>
+                                <div className="room-guests">4 guests</div>
+                                <div className="room-price orange">from <b>250 UAH</b> for <b>1 guest</b></div>
                             </div>
                         </div>
-                        <div className="grid-item">
-                            <div className="room-item room-3">
-                                <div className="bottom-container">
-                                    <div className="room-name">Knights of the Guild</div>
-                                    <div className="room-guests">10 guests</div>
-                                    <div className="room-price orange">from <b>200 UAH</b> for <b>1 guest</b></div>
-                                </div>
+                    </div>
+                    <div className="grid-item">
+                        <div className="room-item room-3">
+                            <div className="bottom-container">
+                                <div className="room-name">Knights of the Guild</div>
+                                <div className="room-guests">10 guests</div>
+                                <div className="room-price orange">from <b>200 UAH</b> for <b>1 guest</b></div>
                             </div>
                         </div>
-                        <div className="grid-item">
-                            <div className="room-item room-4">
-                                <div className="bottom-container">
-                                    <div className="room-name">Den of Thiefes</div>
-                                    <div className="room-guests">12 guests</div>
-                                    <div className="room-price orange">from <b>180 UAH</b> for <b>1 guest</b></div>
-                                </div>
+                    </div>
+                    <div className="grid-item">
+                        <div className="room-item room-4">
+                            <div className="bottom-container">
+                                <div className="room-name">Den of Thiefes</div>
+                                <div className="room-guests">12 guests</div>
+                                <div className="room-price orange">from <b>180 UAH</b> for <b>1 guest</b></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </Section>
-        )
-    }
+            </div>
+        </Section>
+    )
 }
 
 const Section = styled.div`
