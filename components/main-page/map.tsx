@@ -31,7 +31,7 @@ function Map() {
     }, [])
 
     return (
-        <Section>
+        <Section id="contacts-section">
             {isLoaded && (
                 <GoogleMap
                     mapContainerStyle={{ width: '100%', height: '100%' }}

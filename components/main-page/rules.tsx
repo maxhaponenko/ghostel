@@ -11,7 +11,7 @@ export default function Rules () {
     const router = useRouter()
 
     return (
-        <Section>
+        <Section id="rules-section">
             <div className="accomodation-time">
                 <div className="checkin">
                     <span className="time">14:00</span>

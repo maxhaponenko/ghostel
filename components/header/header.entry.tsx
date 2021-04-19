@@ -70,6 +70,15 @@ class Header extends React.PureComponent<OwnProps, State> {
     }
     handleOutsideClickBinded = this.handleOutsideClick.bind(this)
 
+    scrollToRules = () => {
+        const section = document.getElementById("rules-section")
+        section.scrollIntoView({ block: 'center' })
+    }
+    scrollToContacts = () => {
+        const section = document.getElementById("contacts-section")
+        section.scrollIntoView({ block: 'center' })
+    }
+
     render() {
 
         const { isOpen } = this.state
@@ -82,10 +91,10 @@ class Header extends React.PureComponent<OwnProps, State> {
                         <div className="menu-container" ref={this.mobileMenu}>
                             <div className="menu">
                                 <ul>
-                                    <li><Link href="/">RULES</Link></li>
-                                    <li><Link href="/jilye_vo_lvove">FACILITIES</Link></li>
                                     <li><Link href="/rooms/lords-chambers">ROOMS</Link></li>
-                                    <li><Link href="/">CONTACTS</Link></li>
+                                    <li><Link href="/jilye_vo_lvove">FACILITIES</Link></li>
+                                    <li><a onClick={() => this.props.router.push('/').then(() => this.scrollToRules())}>RULES</a></li>
+                                    <li><a onClick={() => this.props.router.push('/').then(() => this.scrollToContacts())}>CONTACTS</a></li>
                                 </ul>
                             </div>
                             <div className="discount">
@@ -216,7 +225,7 @@ const Panel = styled.div`
                         &:last-child {
                             margin-bottom: 0;
                         }
-                        a {
+                        a, p {
                             color: #666666;
                             text-shadow: none;
                             font-weight: 700;
@@ -253,7 +262,7 @@ const Panel = styled.div`
                 @media (max-width: 1100px) {
                     margin: 0 20px;
                 }
-                a {
+                a, p {
                     color: white;
                     text-decoration: none;
                     color: white;
@@ -261,6 +270,7 @@ const Panel = styled.div`
                     font-weight: 600;
                     text-shadow: 0 1px 1px rgba(0,0,0,0.89);
                     transition: all 100ms ease-in-out;
+                    cursor: pointer;
                     &:hover {
                         color: rgba(255,255,233,0.9);
                     }

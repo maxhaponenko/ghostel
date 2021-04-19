@@ -13,10 +13,10 @@ export default function Footer() {
                 <div className="content">
                     <ul className="menu">
                         <li><Link href="/">Home</Link></li>
-                        <li><Link href="/">About us</Link></li>
-                        <li><Link href="/">Rooms</Link></li>
-                        <li><Link href="/">Contacts</Link></li>
-                        <li><Link href="/">Rules</Link></li>
+                        <li><Link href="/jilye_vo_lvove">Facilities</Link></li>
+                        <li><Link href="/rooms/lords-chambers">Rooms</Link></li>
+                        <li><Link href="/conditions/accomodation">Accomodation rules</Link></li>
+                        <li><Link href="/conditions/accomodation">Payment rules</Link></li>
                         <li><Link href="/">Check availability</Link></li>
                     </ul>
                     <div className="contacts">
