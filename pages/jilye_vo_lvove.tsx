@@ -1,4 +1,4 @@
-import DefaultLayout from 'components/default-layout'
+import DefaultLayout from 'components/layouts/default-layout'
 import styled from 'styled-components'
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome'
 import { faConciergeBell, faWifi, faBroom, faLock, faBed, faChess, faFolderOpen, faCoffee, faSun, faShower, faMap, faWind, faTshirt } from '@fortawesome/free-solid-svg-icons'

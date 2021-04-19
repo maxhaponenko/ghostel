@@ -31,9 +31,9 @@ export default function Footer() {
                 </div>
             </div>
             <div className="links">
-                <a href="">Terms and Conditions</a>
+                <Link href="/conditions/terms-and-conditions">Terms and Conditions</Link>
                 <span>|</span>
-                <Link href="/privacy-policy">Privacy Policy</Link>
+                <Link href="/conditions/privacy-policy">Privacy Policy</Link>
                 <span>|</span>
                 <a href="">Sitemap</a>
                 <span>|</span>

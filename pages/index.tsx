@@ -1,5 +1,5 @@
 import React from 'react';
-import DefaultLayout from 'components/default-layout'
+import DefaultLayout from 'components/layouts/default-layout'
 import FirstScreen from 'components/main-page/first-screen'
 import SecondScreen from 'components/main-page/rooms'
 import Rules from 'components/main-page/rules'

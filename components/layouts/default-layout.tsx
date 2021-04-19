@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
-import Header from './header/header.entry'
-import Footer from './footer'
+import Header from '../header/header.entry'
+import Footer from '../footer'
 import styled from 'styled-components'
 
 export default function DefaultLayout({ 

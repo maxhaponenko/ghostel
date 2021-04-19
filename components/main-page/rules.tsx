@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import background from 'public/images/image_rules.jpg'
 import bgPaper from 'public/images/bg-2.jpg'
@@ -6,25 +6,26 @@ import Button from 'components/forms/button'
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome'
 import { faConciergeBell, faCreditCard } from '@fortawesome/free-solid-svg-icons'
 
-export default class Rules extends Component {
-    render() {
-        return (
-            <Section>
-                <div className="accomodation-time">
-                    <div className="checkin">
-                        <span className="time">14:00</span>
-                        <span className="text">checkin</span>
-                    </div>
-                    <div className="checkout">
-                        <span className="text">checkout</span>
-                        <span className="time">12:00</span>
-                    </div>
+export default function Rules () {
+
+    const router = useRouter()
+
+    return (
+        <Section>
+            <div className="accomodation-time">
+                <div className="checkin">
+                    <span className="time">14:00</span>
+                    <span className="text">checkin</span>
                 </div>
-                <Button type="default" size="lg" shadow color="white" onClick={() => {}}><FAIcon icon={faConciergeBell} />Accomodation Rools</Button>
-                <Button type="default" size="lg" shadow color="white" onClick={() => {}}><FAIcon icon={faCreditCard} />Payment rools</Button>
-            </Section>
-        )
-    }
+                <div className="checkout">
+                    <span className="text">checkout</span>
+                    <span className="time">12:00</span>
+                </div>
+            </div>
+            <Button type="default" size="lg" shadow color="white" onClick={() => router.push('/conditions/accomodation').then(() => window.scroll(0, 0))}><FAIcon icon={faConciergeBell} />Accomodation Rules</Button>
+            <Button type="default" size="lg" shadow color="white" onClick={() => router.push('/conditions/payment').then(() => window.scroll(0, 0))}><FAIcon icon={faCreditCard} />Payment rools</Button>
+        </Section>
+    )
 }
 
 const Section = styled.div`

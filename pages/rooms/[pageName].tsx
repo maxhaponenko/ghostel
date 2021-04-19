@@ -1,4 +1,4 @@
-import Layout from 'components/default-layout'
+import Layout from 'components/layouts/default-layout'
 import styled from 'styled-components'
 import { FontAwesomeIcon as FAIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowAltLeft, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
