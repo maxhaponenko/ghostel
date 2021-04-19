@@ -1,6 +1,6 @@
 import TextPage from 'components/layouts/text-page'
 
-export default function () {
+export default function Payment () {
     return (
         <TextPage>
             <h1>Payment</h1>

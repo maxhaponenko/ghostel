@@ -1,6 +1,6 @@
 import TextPage from 'components/layouts/text-page'
 
-export default function () {
+export default function PrivacyPolicy () {
     return (
         <TextPage>
             <h1>Privacy Policy</h1>

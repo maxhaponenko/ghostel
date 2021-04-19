@@ -1,6 +1,6 @@
 import TextPage from 'components/layouts/text-page'
 
-export default function () {
+export default function TermsAndConditions () {
     return (
         <TextPage>
             <h1>Terms and Conditions</h1>

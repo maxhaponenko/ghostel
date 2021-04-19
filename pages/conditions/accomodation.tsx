@@ -1,6 +1,6 @@
 import TextPage from 'components/layouts/text-page'
 
-export default function () {
+export default function Accomodation () {
     return (
         <TextPage>
             <h1>Accomodation</h1>

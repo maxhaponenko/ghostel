@@ -1,6 +1,6 @@
 import Layout from 'components/layouts/default-layout'
 
-export default function ({ children }) {
+export default function TextPageLayout ({ children }) {
     return (
         <Layout>
             <div className="text-page">
