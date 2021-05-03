@@ -84,7 +84,7 @@ const Btn: any = styled.button`
         if (props.size === 'sm') return '0.25rem 0.6rem'
         if (props.size === 'md') return '0.3rem 0.7rem'
         if (props.size === 'lg') return '0.3rem 0.7rem'
-        if (props.size === 'xl') return '0.4rem 0.9rem'
+        if (props.size === 'xl') return '0.5rem 1rem'
     }};
     box-shadow: ${(props: any) => {
         if (props.shadow) return '0px 1px 1px rgba(0,0,0,0.5)';
