@@ -8,7 +8,7 @@ import image3 from 'public/images/image_6.jpg';
 
 const images = [image, image1, image2, image3]
 
-const getAnimation = (items) => (index) => {
+const getAnimation = (items, initial = false) => (index) => {
     const isCenter = items[index] === true
     const isLeft = (() => {
         if (items[index] === true) return false
@@ -29,7 +29,7 @@ const getAnimation = (items) => (index) => {
             transform: isCenter ? `translate(${centerPosition}) scale(1)` : isLeft ? `translate(${leftPosition}) scale(0.25)` : `translate(${rightPosoition}) scale(0.25)`,
         },
         delay: index * 0,
-
+        immediate: initial,
         config: config.default,
     }
 }
@@ -44,7 +44,7 @@ export default function ImageSlider() {
     })
     let [fullScreenMode, setFullScreenMode] = useState(false)
 
-    const [springs, set] = useSprings(Object.values(items).length, getAnimation(items))
+    const [springs, set] = useSprings(Object.values(items).length, getAnimation(items, true))
 
     useEffect(() => {
         set(getAnimation(items) as any)
