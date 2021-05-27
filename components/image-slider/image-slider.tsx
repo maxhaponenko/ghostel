@@ -66,28 +66,43 @@ export default function ImageSlider() {
 
     }, [])
 
+    const changeSlide = (position: number) => {
+        const centerImageIndex = Object.values(items).indexOf(true)
+        let newPosition = {
+            0: false,
+            1: false,
+            2: false,
+            3: false
+        }
+        newPosition[position] = true
+        setItems(newPosition)
+
+        // Update indexes to lie one on top of another
+        document.querySelectorAll(`.animated-${centerImageIndex}`).forEach((item) => {
+            (item as any).style['z-index'] = maxZindex() + 1
+        })
+    }
+
     const handleClick = (index, event) => {
         event.preventDefault();
 
         const centerImageIndex = Object.values(items).indexOf(true)
-
+        
         const isCenterItem = items[index] === true
         if (isCenterItem) {
             setFullScreenMode(true)
         } else {
-            let newPosition = {
-                0: false,
-                1: false,
-                2: false,
-                3: false
+            // Prevent from clicking on last image if next available image exists 
+            if (centerImageIndex < index && (index - centerImageIndex) > 1 && index !== centerImageIndex + 1) {
+                changeSlide(centerImageIndex + 1)
+                return
             }
-            newPosition[index] = true
-            setItems(newPosition)
-
-            // Update indexes to lie one on top of another
-            document.querySelectorAll(`.animated-${centerImageIndex}`).forEach((item) => {
-                (item as any).style['z-index'] = maxZindex() + 1
-            })
+            if (centerImageIndex > index && (centerImageIndex - index) > 1 && index !== centerImageIndex - 1) {
+                changeSlide(centerImageIndex - 1)
+                return
+            } else {
+                changeSlide(index)
+            }
         }
     }
 
@@ -96,16 +111,17 @@ export default function ImageSlider() {
     const renderAnimatedImages = () => (
         <>
             {springs.map((item, index) => (
-                <animated.div
+                <animated.img
                     key={index}
                     className={`image animated ${'animated-' + index} ${centerIndex === index ? 'center-image' : ''}`}
-                    style={{ ...item, backgroundImage: `url(${images[index]})`, zIndex: 1 }}
+                    style={{ ...item, zIndex: 1 }}
+                    src={images[index]}
                     onClick={(event) => {
                         event.stopPropagation()
                         handleClick(index, event)
                     }}
                 >
-                </animated.div>
+                </animated.img>
             ))}
         </>
     )
@@ -135,7 +151,7 @@ const Section = styled.div`
     height: 490px;
     .image {
         position: absolute;
-        height: 432px;
+        height: auto;
         width: 287px;
         border-radius: 15px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.5);
@@ -170,7 +186,7 @@ const Section = styled.div`
             justify-content: center;
             align-items: center;
             .image {
-                height: 800px;
+                height: auto;
                 width: 500px;
                 max-height: 80%;
                 max-width: 50%;

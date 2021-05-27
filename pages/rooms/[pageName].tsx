@@ -77,7 +77,6 @@ const Section = styled.div`
         @media (max-width: 1120px) {
             flex-direction: column-reverse;
         }
-        
     }
     .column {
         width: 50%;
