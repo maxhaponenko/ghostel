@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSprings, animated, config } from 'react-spring'
 import styled from 'styled-components'
+import Slider from 'react-slick'
 import image from 'public/images/image_5.jpg'
 import image1 from 'public/images/image_7.jpg';
 import image2 from 'public/images/image_4.jpg';
@@ -87,7 +88,7 @@ export default function ImageSlider() {
         event.preventDefault();
 
         const centerImageIndex = Object.values(items).indexOf(true)
-        
+
         const isCenterItem = items[index] === true
         if (isCenterItem) {
             setFullScreenMode(true)
@@ -109,7 +110,7 @@ export default function ImageSlider() {
     const centerIndex = Object.values(items).indexOf(true)
 
     const renderAnimatedImages = () => (
-        <>
+        <div className="image-container">
             {springs.map((item, index) => (
                 <animated.img
                     key={index}
@@ -123,11 +124,22 @@ export default function ImageSlider() {
                 >
                 </animated.img>
             ))}
-        </>
+        </div>
     )
+
+    const mobileViewSliderOptions = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        centerMode: false
+    }
 
     return (
         <Section fullScreen={fullScreenMode}>
+
             {renderAnimatedImages()}
             <div className="full-screen-mode" onClick={(event) => {
                 setFullScreenMode(false)
@@ -135,6 +147,15 @@ export default function ImageSlider() {
                 <div className="wrapper">
                     {renderAnimatedImages()}
                 </div>
+            </div>
+            <div className="mobile-view">
+                <Slider {...mobileViewSliderOptions} >
+                    {images.map((item, index) => (
+                        <div key={index} className="slider-image-container" >
+                            <div className={`slider-image`} style={{ ...item, zIndex: 1, backgroundImage: `url(${images[index]})` }} ></div>
+                        </div>
+                    ))}
+                </Slider>
             </div>
         </Section>
     )
@@ -149,6 +170,17 @@ const Section = styled.div`
     align-items: center;
     justify-content: center;
     height: 490px;
+    
+    .image-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @media (max-width: 700px) {
+            display: none;
+        }
+    }
     .image {
         position: absolute;
         height: auto;
@@ -168,6 +200,9 @@ const Section = styled.div`
         &.center-image {
             filter: grayscale(0);
         }
+
+        
+
     }
     .full-screen-mode {
         position: fixed;
@@ -192,6 +227,57 @@ const Section = styled.div`
                 max-width: 50%;
             }
         }
+    }
+
+    .mobile-view {
+        display: none;
+        position: relative;
+        width: 100%;
+        height: auto;
+        @media (max-width: 700px) {
+            display: block;
+        }
+        .slick-track {
+            display: flex;
+            .slick-slide {
+                display: flex;
+                height: auto;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                > div {
+                    width: 100%;
+                }
+                img {
+                    margin: 0 auto;
+                    max-height: 400px;
+                    border-radius: 5px;
+                }
+            }
+        }
+        
+        .slick-list {
+            margin: 0 -40px;
+        }
+        .slider-image-container {
+            padding: 0 20px;
+
+            .slider-image {
+                width: 100% !important;
+                height: 400px !important;
+                height: auto;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+
+                margin: 0 auto;
+                max-height: 400px;
+                border-radius: 10px;
+
+                cursor: grab;
+            }
+        }
+        
     }
 `
 
