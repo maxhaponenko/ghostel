@@ -73,11 +73,20 @@ const Section = styled.div`
         flex-wrap: wrap;
         margin-left: -15px;
         margin-right: -15px;
+
+        @media (max-width: 1120px) {
+            flex-direction: column-reverse;
+        }
         
     }
     .column {
         width: 50%;
         padding: 0 15px;
+        
+        @media (max-width: 1120px) {
+            width: 100%;
+        }
+        
     }
     .description {
         display: flex;
