@@ -151,8 +151,8 @@ export default function ImageSlider() {
             <div className="mobile-view">
                 <Slider {...mobileViewSliderOptions} >
                     {images.map((item, index) => (
-                        <div key={index} className="slider-image-container" >
-                            <div className={`slider-image`} style={{ ...item, zIndex: 1, backgroundImage: `url(${images[index]})` }} ></div>
+                        <div className="slider-image-container" >
+                            <div className={`slider-image`} style={{ backgroundImage: `url(${images[index]})` }} ></div>
                         </div>
                     ))}
                 </Slider>
@@ -275,6 +275,7 @@ const Section = styled.div`
                 border-radius: 10px;
 
                 cursor: grab;
+                box-shadow: 0 2px 4px rgb(0 0 0 / 50%);
             }
         }
         
