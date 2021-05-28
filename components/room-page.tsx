@@ -6,12 +6,32 @@ import { useRouter } from 'next/router'
 import Button from 'components/forms/button'
 import { useEffect, useState } from 'react'
 import ImageSlider from 'components/image-slider/image-slider'
+import { rooms } from 'content/rooms'
 
-function CellMonks(props) {
+class OwnProps {
+    id: number;
+    roomName: string;
+    guestsAmount: number;
+    description: string;
+    price: number;
+    images: Array<string>
+}
+
+type Props = OwnProps
+
+
+function RoomPage(props: Props) {
 
     const router = useRouter()
     const { pageName } = router.query
-    console.log(pageName)
+
+    const getLeftPageId = (currentPageId: number): number => {
+        const result = Object.values(rooms).map(item => item.id).indexOf(currentPageId - 1)
+        if (result < 0) return Object.keys(rooms).length - 1
+        return result
+    }
+
+    console.log(getLeftPageId(props.id))
 
     return (
         <Layout>
@@ -25,18 +45,18 @@ function CellMonks(props) {
                         <div className="column">
                             <div className="description">
                                 <header>
-                                    <div className="room-name">Lords Chembers</div>
-                                    <div className="max-guestes">2 guests</div>
+                                    <div className="room-name">{props.roomName}</div>
+                                    <div className="max-guestes">{props.guestsAmount} guests</div>
                                 </header>
-                                <div className="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+                                <div className="text">{props.description}</div>
                                 <footer>
-                                    <div className="price"><span>500 UAH</span> per day for 2 guests</div>
+                                    <div className="price"><span>{props.price} UAH</span> per day for {props.guestsAmount} {props.guestsAmount === 1 ? 'guest' : 'guests'}</div>
                                     <Button color="primary" type="default" onClick={() => { }} size="xl" >Book</Button>
                                 </footer>
                             </div>
                         </div>
                         <div className="column">
-                            <ImageSlider />
+                            <ImageSlider images={props.images} />
                         </div>
                     </div>
                 </Section>
@@ -132,4 +152,4 @@ const Section = styled.div`
     }
 `
 
-export default CellMonks
+export default RoomPage

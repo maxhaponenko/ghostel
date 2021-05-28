@@ -2,12 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useSprings, animated, config } from 'react-spring'
 import styled from 'styled-components'
 import Slider from 'react-slick'
-import image from 'public/images/image_5.jpg'
-import image1 from 'public/images/image_7.jpg';
-import image2 from 'public/images/image_4.jpg';
-import image3 from 'public/images/image_6.jpg';
-
-const images = [image, image1, image2, image3]
 
 const getAnimation = (items, initial = false) => (index) => {
     const isCenter = items[index] === true
@@ -35,7 +29,13 @@ const getAnimation = (items, initial = false) => (index) => {
     }
 }
 
-export default function ImageSlider() {
+type Props = {
+    images: Array<string>
+}
+
+export default function ImageSlider(props: Props) {
+
+    const [images, setImages] = useState(props.images)
 
     let [items, setItems] = useState({  // photo visibility state
         0: false,
