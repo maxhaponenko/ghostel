@@ -9,6 +9,10 @@ import SeoText from 'components/main-page/seo-text'
 
 export default class Home extends React.Component {
 
+  componentDidMount() {
+    document.title = 'Ghostel'
+  }
+
   render() {
 
     return (

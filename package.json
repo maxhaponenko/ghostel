@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p 3001",
-    "build": "next build && next export -o _static",
-    "start": "node sammy.js; next start -H 0.0.0.0 -p ${PORT:-8080}"
+    "dev": "cross-env SENDGRID_API_KEY=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 next -p 3001 ",
+    "build": "cross-env SENDGRID_API_KEY=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 next build && next export -o _static",
+    "start": "cross-env SENDGRID_API_KEY=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 node sammy.js; next start -H 0.0.0.0 -p ${PORT:-8080}"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +17,9 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.12",
     "@react-google-maps/api": "^2.1.1",
+    "@sendgrid/mail": "^7.4.4",
     "@zeit/next-sass": "^1.0.1",
+    "axios": "^0.21.1",
     "moment": "^2.29.1",
     "next": "^10.0.0",
     "next-compose-plugins": "^2.2.1",
@@ -40,6 +42,7 @@
     "@types/node": "^14.14.13",
     "@types/react": "^17.0.0",
     "babel-plugin-styled-components": "^1.12.0",
+    "cross-env": "^7.0.3",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
     "sass-loader": "^10.1.1",

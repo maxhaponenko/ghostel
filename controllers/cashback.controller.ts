@@ -1,4 +1,6 @@
+import { AppState } from 'root.reducer';
 import { StateController } from 'state.controller';
+import { CashbackService } from 'api/cashback.service'
 
 export enum CurrentStep {
     Initial = 1,
@@ -8,10 +10,12 @@ export enum CurrentStep {
 
 class CashbackState {
     currentStep: CurrentStep;
+    email: string
 }
 
 const defaultState: CashbackState = {
-    currentStep: CurrentStep.Initial
+    currentStep: CurrentStep.Initial,
+    email: '',
 }
 
 const stateController = new StateController<CashbackState>(
@@ -20,7 +24,12 @@ const stateController = new StateController<CashbackState>(
 )
 
 class Actions {
-    
+    public static sendCashbackRequest() {
+        return async (dispatch, getState: () => AppState) => {
+            const email = getState().cashback.email
+            const result = await CashbackService.sendCashbackRequest(email)
+        }
+    }
 }
 
 class Selectors {

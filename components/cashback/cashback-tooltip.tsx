@@ -4,15 +4,20 @@ import { AppState } from 'root.reducer'
 import styled from 'styled-components'
 import { CurrentStep } from 'controllers/cashback.controller'
 import Button from 'components/forms/button';
+import { Actions as CashbackController } from 'controllers/cashback.controller'
 
 class OwnProps {
     children: any
+}
+
+class DispatchProps {
+    sendRequest: () => void
 }
 class StateProps {
     currentStep: CurrentStep
 }
 
-export class CachbackTooltip extends Component<StateProps & OwnProps> {
+export class CachbackTooltip extends Component<StateProps & DispatchProps & OwnProps> {
 
     tooltipRef: RefObject<any> = React.createRef()
 
@@ -64,7 +69,7 @@ export class CachbackTooltip extends Component<StateProps & OwnProps> {
                 }}
             >
                 {this.props.children}
-                <div className="tooltip-panel">
+                <div className="tooltip-panel" onClick={() => this.props.sendRequest()}>
                     {this.renderCurrentStep()}
                 </div>
             </Tooltip>
@@ -111,12 +116,12 @@ const Tooltip = styled.div`
     }
 `
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps = (state: AppState): StateProps => ({
     currentStep: state.cashback.currentStep
 })
 
-const mapDispatchToProps = {
-
+const mapDispatchToProps: DispatchProps = {
+    sendRequest: CashbackController.sendCashbackRequest
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CachbackTooltip)
