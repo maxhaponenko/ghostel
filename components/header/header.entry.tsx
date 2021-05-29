@@ -70,13 +70,26 @@ class Header extends React.PureComponent<OwnProps, State> {
     }
     handleOutsideClickBinded = this.handleOutsideClick.bind(this)
 
-    scrollToRules = () => {
-        const section = document.getElementById("rules-section")
-        section.scrollIntoView({ block: 'center' })
+    scrollToElement = (elementId: string) => {
+        const section = document.getElementById(elementId)
+        const elementCoundingRect = section.getBoundingClientRect()
+        const scrollTopPosition = section.offsetTop - (window.innerHeight / 2) + (elementCoundingRect.height / 2)
+        window.scrollTo({ top: scrollTopPosition, behavior: 'smooth' })
     }
-    scrollToContacts = () => {
-        const section = document.getElementById("contacts-section")
-        section.scrollIntoView({ block: 'center' })
+
+    goToRules = () => {
+        if (this.props.router.pathname === '/') {
+            this.scrollToElement("rules-section")
+        } else {
+            this.props.router.push('/').then(() => this.scrollToElement("rules-section"))
+        }
+    }
+    goToContacts = () => {
+        if (this.props.router.pathname === '/') {
+            this.scrollToElement("contacts-section")
+        } else {
+            this.props.router.push('/').then(() => this.scrollToElement("contacts-section"))
+        }
     }
 
     render() {
@@ -91,10 +104,10 @@ class Header extends React.PureComponent<OwnProps, State> {
                         <div className="menu-container" ref={this.mobileMenu}>
                             <div className="menu">
                                 <ul>
-                                    <li><Link href="/rooms/lords-chambers">ROOMS</Link></li>
+                                    <li><Link href="/rooms/lords_chambers">ROOMS</Link></li>
                                     <li><Link href="/jilye_vo_lvove">FACILITIES</Link></li>
-                                    <li><a onClick={() => this.props.router.push('/').then(() => this.scrollToRules())}>RULES</a></li>
-                                    <li><a onClick={() => this.props.router.push('/').then(() => this.scrollToContacts())}>CONTACTS</a></li>
+                                    <li><a onClick={() => this.goToRules()}>RULES</a></li>
+                                    <li><a onClick={() => this.goToContacts()}>CONTACTS</a></li>
                                 </ul>
                             </div>
                             <div className="discount">

@@ -1,5 +1,5 @@
 import Document, { Head, Main, NextScript, Html } from 'next/document'
-// Import styled components ServerStyleSheet
+import favicon from '../public/images/favicon.png'
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
@@ -21,6 +21,7 @@ export default class MyDocument extends Document {
         return (
             <html>
                 <Head>
+                    <link rel="shortcut icon" type="image/png" href={favicon} sizes="32x32" />
                     {this.props.styleTags}
                 </Head>
                 <body>
