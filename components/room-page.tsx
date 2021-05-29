@@ -23,23 +23,30 @@ type Props = OwnProps
 function RoomPage(props: Props) {
 
     const router = useRouter()
-    const { pageName } = router.query
 
     const getLeftPageId = (currentPageId: number): number => {
-        const result = Object.values(rooms).map(item => item.id).indexOf(currentPageId - 1)
-        if (result < 0) return Object.keys(rooms).length - 1
+        const result = Object.values(rooms).map(item => item.id).indexOf(currentPageId) - 1
+        if (result < 0) return Object.values(rooms).length - 1
+        return result
+    }
+    const getRightPageId = (currentPageId: number): number => {
+        const result = Object.values(rooms).map(item => item.id).indexOf(currentPageId) + 1
+        if (result > (Object.values(rooms).length - 1)) return 0
         return result
     }
 
-    console.log(getLeftPageId(props.id))
+    const navigation = {
+        leftPage: Object.values(rooms).find(item => item.id === getLeftPageId(props.id)),
+        rightPage: Object.values(rooms).find(item => item.id === getRightPageId(props.id)),
+    }
 
     return (
         <Layout>
             <div className="container">
                 <Section>
                     <div className="navigation">
-                        <div className="prev-page"><FAIcon icon={faLongArrowAltLeft} />Cell Monks</div>
-                        <div className="next-page">Lords Chambers<FAIcon icon={faLongArrowAltRight} /></div>
+                        <div className="prev-page" onClick={() => router.push(navigation.leftPage.path)}><FAIcon icon={faLongArrowAltLeft} />{navigation.leftPage.name}</div>
+                        <div className="next-page" onClick={() => router.push(navigation.rightPage.path)}>{navigation.rightPage.name}<FAIcon icon={faLongArrowAltRight} /></div>
                     </div>
                     <div className="row">
                         <div className="column">

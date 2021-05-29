@@ -15,7 +15,7 @@ export default function SecondScreen() {
                 <h2>ROOMS</h2>
                 <div className="rooms-container">
                     <div className="grid-item">
-                        <div className="room-item room-1" onClick={() => router.push("/rooms/lords-chambers")}>
+                        <div className="room-item room-1" onClick={() => router.push("/rooms/lords_chambers")}>
                             <div className="bottom-container">
                                 <div className="room-name">Lord`s Chambers</div>
                                 <div className="room-guests">2 guests</div>
@@ -24,7 +24,7 @@ export default function SecondScreen() {
                         </div>
                     </div>
                     <div className="grid-item">
-                        <div className="room-item room-2" onClick={() => router.push("/rooms/cell-monks")}>
+                        <div className="room-item room-2" onClick={() => router.push("/rooms/cell_monks")}>
                             <div className="bottom-container">
                                 <div className="room-name">Cell Monks</div>
                                 <div className="room-guests">4 guests</div>
@@ -33,7 +33,7 @@ export default function SecondScreen() {
                         </div>
                     </div>
                     <div className="grid-item">
-                        <div className="room-item room-3" onClick={() => router.push("/rooms/guilds-knights")}>
+                        <div className="room-item room-3" onClick={() => router.push("/rooms/knights_of_the_guild")}>
                             <div className="bottom-container">
                                 <div className="room-name">Knights of the Guild</div>
                                 <div className="room-guests">10 guests</div>
@@ -42,7 +42,7 @@ export default function SecondScreen() {
                         </div>
                     </div>
                     <div className="grid-item">
-                        <div className="room-item room-4" onClick={() => router.push("/rooms/den-of-thiefes")}>
+                        <div className="room-item room-4" onClick={() => router.push("/rooms/den_of_thieves")}>
                             <div className="bottom-container">
                                 <div className="room-name">Den of Thiefes</div>
                                 <div className="room-guests">12 guests</div>
