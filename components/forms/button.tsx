@@ -6,7 +6,8 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 class OwnProps {
     type: 'default' | 'outline';
     color: 'primary' | 'white' | 'grey' | 'danger';
-    size: 'sm' | 'md' | 'lg' | 'xl'
+    size: 'sm' | 'md' | 'lg' | 'xl';
+    width?: 'auto' | 'full-width';
     onClick: () => any;
     disabled?: boolean;
     shadow?: boolean;
@@ -17,7 +18,7 @@ class OwnProps {
 export default class Button extends Component<OwnProps> {
     render() {
 
-        const { type, color, size, disabled, shadow, isLoading, ...otherProps } = this.props
+        const { type, color, size, disabled, width, shadow, isLoading, ...otherProps } = this.props
 
         return (
             <Btn
@@ -26,6 +27,7 @@ export default class Button extends Component<OwnProps> {
                 size={size}
                 disabled={disabled ? disabled : false}
                 shadow={shadow ? shadow : false}
+                width={width}
                 isLoading={isLoading ? isLoading : false}
                 {...otherProps}
             >
@@ -86,6 +88,7 @@ const Btn: any = styled.button`
         if (props.size === 'lg') return '0.3rem 0.7rem'
         if (props.size === 'xl') return '0.5rem 1rem'
     }};
+    width: ${props => props.width === 'full-width' ? '100%' : 'auto'};
     box-shadow: ${(props: any) => {
         if (props.shadow) return '0px 1px 1px rgba(0,0,0,0.5)';
         return 'none'

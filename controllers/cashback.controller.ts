@@ -10,12 +10,20 @@ export enum CurrentStep {
 
 class CashbackState {
     currentStep: CurrentStep;
-    email: string
+    email: string;
+
+    isProcessing: boolean;
+    isValid: boolean;
+    didTryProcess: boolean;
 }
 
 const defaultState: CashbackState = {
-    currentStep: CurrentStep.Initial,
+    currentStep: CurrentStep.Form,
     email: '',
+
+    isProcessing: false,
+    isValid: null,
+    didTryProcess: false
 }
 
 const stateController = new StateController<CashbackState>(
@@ -24,6 +32,19 @@ const stateController = new StateController<CashbackState>(
 )
 
 class Actions {
+
+    public static seeMore() {
+        return dispatch => {
+            dispatch(stateController.setState({ currentStep: CurrentStep.Form }))
+        }
+    }
+
+    public static onEmailChange(value: string) {
+        return dispatch => {
+            dispatch(stateController.setState({ email: value }))
+        }
+    }
+
     public static sendCashbackRequest() {
         return async (dispatch, getState: () => AppState) => {
             const email = getState().cashback.email

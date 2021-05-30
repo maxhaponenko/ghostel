@@ -5,16 +5,21 @@ import styled from 'styled-components'
 import { CurrentStep } from 'controllers/cashback.controller'
 import Button from 'components/forms/button';
 import { Actions as CashbackController } from 'controllers/cashback.controller'
+import Input from 'components/forms/input'
 
 class OwnProps {
     children: any
 }
 
 class DispatchProps {
+    seeMore: () => void;
+    onEmailChange: (value: string) => void;
     sendRequest: () => void
 }
 class StateProps {
-    currentStep: CurrentStep
+    currentStep: CurrentStep;
+    isProcessing: boolean;
+    isValid: boolean;
 }
 
 export class CachbackTooltip extends Component<StateProps & DispatchProps & OwnProps> {
@@ -52,7 +57,15 @@ export class CachbackTooltip extends Component<StateProps & DispatchProps & OwnP
             return (
                 <div className="step1">
                     <span>Cashback for groups</span>
-                    <Button type='outline' size="sm" color="primary" isLoading={true} onClick={() => {}} >See more</Button>
+                    <Button type='outline' size="sm" color="primary" isLoading={this.props.isProcessing} onClick={() => this.props.seeMore()} >See more</Button>
+                </div>
+            )
+        } else if (currentStep === CurrentStep.Form) {
+            return (
+                <div className="step2">
+                    <span>Send request and we will go back in touch with you</span>
+                    <Input width="full-width" onChange={() => {}} value={''} />
+                    <Button width="full-width" type='outline' size="lg" color="primary" isLoading={this.props.isProcessing} onClick={() => this.props.seeMore()} >Receive proposal</Button>
                 </div>
             )
         }
@@ -85,7 +98,7 @@ const Tooltip = styled.div`
         top: 100%;
         right: 0;
         width: 336px;
-        /* height: 54px; */
+        height: unset !important;
         box-shadow: 0 1px 1px rgba(0,0,0,0.5);
         background-color: white;
         border-radius: 20px;
@@ -113,14 +126,32 @@ const Tooltip = styled.div`
                 margin-left: 13px;
             }
         }
+        .step2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+            align-items: center;
+            > span {
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+            > div {
+                margin-bottom: 10px;
+            }
+        }
     }
 `
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    currentStep: state.cashback.currentStep
+    currentStep: state.cashback.currentStep,
+    isProcessing: state.cashback.isProcessing,
+    isValid: state.cashback.isValid
 })
 
 const mapDispatchToProps: DispatchProps = {
+    seeMore: CashbackController.seeMore,
     sendRequest: CashbackController.sendCashbackRequest
 }
 
